@@ -1,5 +1,6 @@
 # BD
 
+### Zadania [Lab_1](http://github.com/piotrsladowski/BD/blob/main/Lab_1.md) *by @hbery*
 
 ### Zadania [Lab_2](http://github.com/piotrsladowski/BD/blob/main/Lab_2.md) *by @marcinswistak*
 
