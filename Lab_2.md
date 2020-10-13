@@ -65,7 +65,7 @@ SELECT W2.title from movies_list AS W1 INNER JOIN episodes_list AS W2 ON W1.mid 
 ### __Zad7.__ Wyświetlić numery i tytuły filmów należących do kategorii 63.
 
 ```sql
-SELECT m.mid, e.title from movies_list AS m
+	SELECT m.mid, e.title from movies_list AS m
 		INNER JOIN episodes_list AS e ON m.mid = e.mid
 	WHERE m.cid = 63;
 ```
@@ -74,25 +74,24 @@ SELECT m.mid, e.title from movies_list AS m
 ### __Zad8.__ Wyświetlić numery i tytuły filmów należących do kategorii "Education" posortowane po tytułach.
 
 ```	sql
-    SELECT m.mid, e.title from movies_list AS m
+	SELECT m.mid, e.title from movies_list AS m
 		INNER JOIN episodes_list AS e ON m.mid = e.mid
 		INNER JOIN categories AS c ON c.cid = m.cid
-	WHERE c.name = 'Education' ORDER BY e.title;
+	WHERE c.name = 'Education' AND e.is_movie = 1 ORDER BY e.title;
 ```
-__UWAGA wyszło mi 31 tytułów a Sikorze 15.__
-***
+
 
 ### __Zad9.__ Wyświetlić listę epizodów (jako episode) oraz tytuły filmów, których te epizody są fragmentami (jako movie). Posortować według tytułu filmu (rosnąco) oraz wg czasu początku epizodu (malejąco).
 
 ```sql
-SELECT e.title AS episode, ee.title AS movie from episodes_list e INNER JOIN episodes_list2 ee ON e.mid = ee.mid WHERE e.is_movie=0 AND ee.is_movie=1 ORDER BY ee.title asc, e.episode_start DESC;
+SELECT e.title AS episode, ee.title AS movie from episodes_list e INNER JOIN episodes_list ee ON e.mid = ee.mid WHERE e.is_movie=0 AND ee.is_movie=1 ORDER BY ee.title asc, e.episode_start DESC;
 ```
 ***
 
 ### __Zad10.__ Jak wyżej tylko dodać jeszcze kolumnę 'start' z czasem początku epizodu w formacie: HH:MM:SS. W tabeli czas podany jest w milisekundach. Zalecane użycie funkcji reltime(int4).
 
 ```sql
-SELECT reltime(e.episode_start/1000), e.title AS episode, ee.title AS movie from episodes_list e INNER JOIN episodes_list2 ee ON e.mid = ee.mid WHERE e.is_movie=0 AND ee.is_movie=1 ORDER BY ee.title asc, e.episode_start DESC;
+SELECT reltime(e.episode_start/1000), e.title AS episode, ee.title AS movie from episodes_list e INNER JOIN episodes_list ee ON e.mid = ee.mid WHERE e.is_movie=0 AND ee.is_movie=1 ORDER BY ee.title asc, e.episode_start DESC;
 ```
 ***
 
