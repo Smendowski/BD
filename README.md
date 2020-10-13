@@ -7,4 +7,6 @@
 
 ### Zadania [Lab_4](http://github.com/piotrsladowski/BD/blob/main/Lab_4.md) *by @piotrsladowski*
 
+### Zadania [Lab_5](http://github.com/piotrsladowski/BD/blob/main/Lab_5.md) *by @Smendowski*
+
 ### Wstęp [Lab_7](http://github.com/piotrsladowski/BD/blob/main/Lab_7.md) *by @hbery*
