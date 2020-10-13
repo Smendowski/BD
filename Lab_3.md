@@ -2,7 +2,7 @@
 
 Author: @http://github.com/hbery 
 
-##### version: <span style="color: orange;">draft-0.2</span>
+##### version: final-1.0
 
 ---
 
@@ -18,7 +18,15 @@ Author: @http://github.com/hbery
 (5 rows)
 
 ```sql
-select cid, sum(lenmsec) from movies_list group by cid;
+select
+    cid,
+    sum(lenmsec)
+from
+    movies_list
+group by
+    cid
+order by
+    cid;
 ```
 
 ---
@@ -35,7 +43,17 @@ select cid, sum(lenmsec) from movies_list group by cid;
 (5 rows)
 
 ```sql
-select cid, sum(lenmsec) from movies_list where stream>1500000 group by cid;
+select
+    cid,
+    sum(lenmsec)
+from
+    movies_list
+where
+    stream>1500000
+group by
+    cid
+order by
+    cid;
 ```
 
 ---
@@ -50,7 +68,19 @@ select cid, sum(lenmsec) from movies_list where stream>1500000 group by cid;
 (3 rows)
 
 ```sql
-select cid, sum(lenmsec) from movies_list where stream>1500000 group by cid having sum(lenmsec)>900000;
+select
+    cid,
+    sum(lenmsec)
+from
+    movies_list
+where
+    stream>1500000
+group by
+    cid
+having
+    sum(lenmsec)>900000;
+order by
+    cid;
 ```
 
 ---
@@ -63,7 +93,14 @@ select cid, sum(lenmsec) from movies_list where stream>1500000 group by cid havi
 (1 row)
 
 ```sql
-select count(*) as "liczba opisow" from episodes_list where descrtype=1 and is_movie=0;
+select
+    count(*) as "liczba opisow"
+from
+    episodes_list
+where
+    descrtype=1
+    and
+    is_movie=0;
 ```
 
 ---
@@ -78,7 +115,19 @@ Amusement | 3
 (3 rows)
 
 ```sql
-select (select categories.name as "Nazwa kategorii" from categories where categories.cid=subcategories.cid), count(subcategories.cid) from subcategories group by subcategories.cid having count(subcategories.cid)>=2;
+select
+   (select categories.name as "Nazwa kategorii"
+    from
+        categories
+    where
+        categories.cid=subcategories.cid),
+    count(subcategories.cid)
+from
+    subcategories
+group by
+    subcategories.cid
+having
+    count(subcategories.cid)>=2;
 ```
 
 ---
@@ -93,7 +142,22 @@ Cartoons | 11480 | 1
 (3 rows)
 
 ```sql
-select (select sub.name as "Subkategoria" from subcategories sub where sub.sid=e.sid), max(e.episode_end-e.episode_start), count(e.sid) from episodes_list e group by e.sid having max(e.episode_end-e.episode_start)>10000;
+select
+    s.name as Subkategoria,
+    max(e.episode_end-e.episode_start),
+    count(s.name)
+from
+    episodes_list as e
+    inner join movies_list as m on m.mid=e.mid
+    inner join subcategories as s on s.sid=m.sid
+where
+    (e.episode_end-e.episode_start)>10000
+    and
+    is_movie=0
+group by
+    s.name
+having
+    max(e.episode_end-e.episode_start)>10000;
 ```
 
 ---
@@ -108,7 +172,22 @@ wykłady | 6970 | 1
 (3 rows)
 
 ```sql
-select (select sub.name as "Nazwa podkategorii" from subcategories sub where sub.sid=e.sid), max(e.episode_end-e.episode_start), count(e.sid) from episodes_list e group by e.sid having max(e.episode_end-e.episode_start)<350000;
+select
+    s.name as "Nazwa podkategorii",
+    max(e.episode_end-e.episode_start),
+    count(s.name)
+from
+    episodes_list as e
+    inner join movies_list as m on m.mid=e.mid
+    inner join subcategories as s on s.sid=m.sid
+where
+    is_movie=0
+group by
+    s.name
+having
+    max(e.episode_end-e.episode_start)<350000
+order by
+    s.name;
 ```
 
 ---
@@ -121,7 +200,12 @@ select (select sub.name as "Nazwa podkategorii" from subcategories sub where sub
 (1 row)
 
 ```sql
-select count(distinct title) from movies_list;
+select
+    count(distinct keywords)
+from
+    episodes_list
+where
+    is_movie=1;
 ```
 
 ---
@@ -134,7 +218,12 @@ select count(distinct title) from movies_list;
 (1 row)
 
 ```sql
-select count(descrhtml) from movies_list;
+select
+    count(descrhtml)
+from
+    episodes_list
+where
+    is_movie=1;
 ```
 
 ---
@@ -147,7 +236,14 @@ select count(descrhtml) from movies_list;
 (1 row)
 
 ```sql
-select count(*) from movies_list where descrhtml is null;
+select
+    count(*)
+from
+    episodes_list
+where
+    descrhtml is null
+    and
+    is_movie=1;
 ```
 
 ---
@@ -160,7 +256,12 @@ select count(*) from movies_list where descrhtml is null;
 (1 row)
 
 ```sql
-select count(distinct descrhtml) from movies_list;
+select
+    count(distinct descrhtml)
+from
+    episodes_list
+where
+    is_movie=1;
 ```
 
 ---
@@ -182,7 +283,15 @@ Gustavus and the fly | URL not defined ...
 (44 rows)
 
 ```sql
-select title, coalesce(descrhtml, 'URL not defined') as "url" from movies_list order by title;
+select
+    title,
+    coalesce(descrhtml, 'URL not defined') as "url"
+from
+    episodes_list
+where
+    is_movie=1
+order by
+    title;
 ```
 
 ---
