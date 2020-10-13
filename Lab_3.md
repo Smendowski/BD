@@ -2,11 +2,11 @@
 
 Author: @http://github.com/hbery 
 
-##### version: draft-0.1
+##### version: <span style="color: orange;">draft-0.2</span>
 
 ---
 
-### <b>Zadanie 1.</b> Wyświetlić identyfikator kategorii i sumę czasów trwania filmów należących do poszczególnych kategorii.
+#### **Zadanie 1.** Wyświetlić identyfikator kategorii i sumę czasów trwania filmów należących do poszczególnych kategorii.
 
 |cid | sum |
 |:--:|:---:|
@@ -20,9 +20,10 @@ Author: @http://github.com/hbery
 ```sql
 select cid, sum(lenmsec) from movies_list group by cid;
 ```
-***
 
-### <b>Zadanie 2.</b> Wyświetlić identyfikator kategorii i sumę czasów trwania filmów należących do poszczególnych kategorii. Do obliczania sumy brać tylko filmy, których wartość parametru stream > 1 500 000.
+---
+
+#### **Zadanie 2.** Wyświetlić identyfikator kategorii i sumę czasów trwania filmów należących do poszczególnych kategorii. Do obliczania sumy brać tylko filmy, których wartość parametru stream > 1 500 000.
 
 |cid | sum |
 |:--:|:---:|
@@ -36,9 +37,10 @@ select cid, sum(lenmsec) from movies_list group by cid;
 ```sql
 select cid, sum(lenmsec) from movies_list where stream>1500000 group by cid;
 ```
-***
 
-### <b>Zadanie 3.</b> Wyświetlić identyfikator kategorii i sumę czasów trwania filmów należących do poszczególnych kategorii. Do obliczania sumy brać tylko filmy, których wartość parametru stream > 1 500 000. Wyświetlić tylko kategorie, dla których suma czasów trwania filmu jest większa od 900 000 ms.
+---
+
+#### **Zadanie 3.** Wyświetlić identyfikator kategorii i sumę czasów trwania filmów należących do poszczególnych kategorii. Do obliczania sumy brać tylko filmy, których wartość parametru stream > 1 500 000. Wyświetlić tylko kategorie, dla których suma czasów trwania filmu jest większa od 900 000 ms.
 
 | cid | sum |
 |:---:|:---:|
@@ -50,9 +52,10 @@ select cid, sum(lenmsec) from movies_list where stream>1500000 group by cid;
 ```sql
 select cid, sum(lenmsec) from movies_list where stream>1500000 group by cid having sum(lenmsec)>900000;
 ```
-***
 
-### <b>Zadanie 4.</b> Policz dla ilu epizodów (nie filmów) wprowadzono opis jako tekst (descrtype=1).
+---
+
+#### **Zadanie 4.** Policz dla ilu epizodów (nie filmów) wprowadzono opis jako tekst (descrtype=1).
 
 |liczba opisow|
 |:-----------:|
@@ -62,9 +65,10 @@ select cid, sum(lenmsec) from movies_list where stream>1500000 group by cid havi
 ```sql
 select count(*) as "liczba opisow" from episodes_list where descrtype=1 and is_movie=0;
 ```
-***
 
-### <b>Zadanie 5.</b> Wyświetl nazwy kategorii, które mają przynajmniej 2 subkategorie. Jako drugą kolumnę wyświetl ile subkategorii należy do danej kategorii.
+---
+
+#### **Zadanie 5.** Wyświetl nazwy kategorii, które mają przynajmniej 2 subkategorie. Jako drugą kolumnę wyświetl ile subkategorii należy do danej kategorii.
 
 | Nazwa kategorii | count |
 |:----------------|:-----:|
@@ -76,9 +80,10 @@ Amusement | 3
 ```sql
 select (select categories.name as "Nazwa kategorii" from categories where categories.cid=subcategories.cid), count(subcategories.cid) from subcategories group by subcategories.cid having count(subcategories.cid)>=2;
 ```
-***
 
-### <b>Zadanie 6.</b> Wypisz nazwy subkategorii, dla których maksymalny czas trwania epizodów należących do danej subkategorii jest dłuższy od 10 sekund. Dodatkowo wypisz czas trwania najdłuższego epizodu i liczbę epizodów spełniających warunek dla danej subkategorii. 
+---
+
+#### **Zadanie 6.** Wypisz nazwy subkategorii, dla których maksymalny czas trwania epizodów należących do danej subkategorii jest dłuższy od 10 sekund. Dodatkowo wypisz czas trwania najdłuższego epizodu i liczbę epizodów spełniających warunek dla danej subkategorii. 
 
 |Subkategoria | max | count|
 |:-----------|:---:|:-----:|
@@ -88,11 +93,13 @@ Cartoons | 11480 | 1
 (3 rows)
 
 ```sql
-select (select sub.name as "Subkategoria" from subcategories sub where sub.sid=e.sid), max(e.episode_end-e.episode_start), count(e.sid) from episodes_list e group by sid having max(e.episode_end-e.episode_start)>10000;
+select (select sub.name as "Subkategoria" from subcategories sub where sub.sid=e.sid), max(e.episode_end-e.episode_start), count(e.sid) from episodes_list e group by e.sid having max(e.episode_end-e.episode_start)>10000;
 ```
-***
 
-### <b>Zadanie 7.</b> Wypisz nazwy subkategorii, dla których maksymalna długość epizodu należącego do danej subkategorii jest mniejsza od 350 sekund. Jako drugą kolumnę wypisz długość najdłuższego epizodu, a jako trzecią kolumnę liczbę epizodów należących do danej subkategorii. Posortuj wyniki według nazwy subkategorii.
+---
+
+#### **Zadanie 7.** Wypisz nazwy subkategorii, dla których maksymalna długość epizodu należącego do danej subkategorii jest mniejsza od 350 sekund. Jako drugą kolumnę wypisz długość najdłuższego epizodu, a jako trzecią kolumnę liczbę epizodów należących do danej subkategorii. Posortuj wyniki według nazwy subkategorii.
+
 | Nazwa podkategorii | max | count |
 |:-------------------|:---:|:-----:|
 Biology | 318690 | 5
@@ -101,11 +108,12 @@ wykłady | 6970 | 1
 (3 rows)
 
 ```sql
-select (select sub.name as "Nazwa podkategorii" from subcategories sub where sub.sid=e.sid), max(e.episode_end-e.episode_start), count(e.sid) from episodes_list e group by sid having max(e.episode_end-e.episode_start)<350000;
+select (select sub.name as "Nazwa podkategorii" from subcategories sub where sub.sid=e.sid), max(e.episode_end-e.episode_start), count(e.sid) from episodes_list e group by e.sid having max(e.episode_end-e.episode_start)<350000;
 ```
-***
 
-### <b>Zadanie 8.</b> Policz ile filmów ma różne słowa kluczowe.
+---
+
+#### **Zadanie 8.** Policz ile filmów ma różne słowa kluczowe.
 
 | count |
 |:-----:|
@@ -115,9 +123,10 @@ select (select sub.name as "Nazwa podkategorii" from subcategories sub where sub
 ```sql
 select count(distinct title) from movies_list;
 ```
-***
 
-### <b>Zadanie 9.</b> Policz ile filmów ma zdefiniowany odnośnik URL (parametr descrhtml).
+---
+
+#### **Zadanie 9.** Policz ile filmów ma zdefiniowany odnośnik URL (parametr descrhtml).
 
 | count |
 |:-----:|
@@ -125,11 +134,12 @@ select count(distinct title) from movies_list;
 (1 row)
 
 ```sql
-select count(*) from movies_list where descrhtml is not null;
+select count(descrhtml) from movies_list;
 ```
-***
 
-### <b>Zadanie 10.</b> Policz ile filmów nie ma zdefiniowanego odnośnika URL (parametr descrhtml).
+---
+
+#### **Zadanie 10.** Policz ile filmów nie ma zdefiniowanego odnośnika URL (parametr descrhtml).
 
 | count |
 |:-----:|
@@ -139,9 +149,10 @@ select count(*) from movies_list where descrhtml is not null;
 ```sql
 select count(*) from movies_list where descrhtml is null;
 ```
-***
 
-### <b>Zadanie 11.</b> Policz ile jest zdefiniowanych różnych odnośników URL dla filmów.
+---
+
+#### **Zadanie 11.** Policz ile jest zdefiniowanych różnych odnośników URL dla filmów.
 
 | count |
 |:-----:|
@@ -151,9 +162,11 @@ select count(*) from movies_list where descrhtml is null;
 ```sql
 select count(distinct descrhtml) from movies_list;
 ```
-***
 
-### <b>Zadanie 12.</b> Wypisz nazwy filmów i odnośniki URL posortowane według nazwy filmu. Jeśli odnośnik URL nie jest zdefiniowany powinien pojawić się napis "URL not defined" (użyj COALESCE). 
+---
+
+#### **Zadanie 12.** Wypisz nazwy filmów i odnośniki URL posortowane według nazwy filmu. Jeśli odnośnik URL nie jest zdefiniowany powinien pojawić się napis "URL not defined" (użyj COALESCE). 
+
 | title | url |
 |:---------------------------------------------------------|:------------------------------------
 Bolek & Lolek - Australian steppes | ../html_descriptions/bolek_lolek
@@ -171,4 +184,5 @@ Gustavus and the fly | URL not defined ...
 ```sql
 select title, coalesce(descrhtml, 'URL not defined') as "url" from movies_list order by title;
 ```
-***
+
+---
