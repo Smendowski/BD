@@ -116,18 +116,19 @@ Amusement | 3
 
 ```sql
 select
-   (select categories.name as "Nazwa kategorii"
-    from
-        categories
-    where
-        categories.cid=subcategories.cid),
-    count(subcategories.cid)
+    c.name as "Nazwa kategorii",
+    count(s.cid)
 from
-    subcategories
+    subcategories as s,
+    categories as c
+where
+    c.cid=s.cid
 group by
-    subcategories.cid
+    c.name
 having
-    count(subcategories.cid)>=2;
+    count(s.cid)>=2
+order by
+    c.name desc;
 ```
 
 ---
