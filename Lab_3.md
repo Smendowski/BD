@@ -141,6 +141,33 @@ Geography | 660330 | 11
 Cartoons | 11480 | 1
 (3 rows)
 
+Jak Pan Sikor powiedział:
+
+```sql
+select
+    s.name as "Subkategoria",
+    max(e.episode_end-e.episode_start),
+    count(s.name)
+from
+    episodes_list as e,
+    movies_list as m,
+    subcategories as s
+where
+    m.mid=e.mid
+    and
+    s.sid=m.sid
+    and
+    (e.episode_end-e.episode_start)>10000
+    and
+    e.is_movie=0
+group by
+    s.name
+having
+    max(e.episode_end-e.episode_start)>10000;
+```
+
+Mastermind:
+
 ```sql
 select
     s.name as "Subkategoria",
@@ -170,6 +197,33 @@ Biology | 318690 | 5
 Cartoons | 11480 | 1
 wykłady | 6970 | 1
 (3 rows)
+
+Jak Pan Sikor powiedział:
+
+```sql
+select
+    s.name as "Nazwa podkategorii",
+    max(e.episode_end-e.episode_start),
+    count(s.name)
+from
+    episodes_list as e,
+    movies_list as m,
+    subcategories as s
+where
+    m.mid=e.mid
+    and
+    s.sid=m.sid
+    and
+    e.is_movie=0
+group by
+    s.name
+having
+    max(e.episode_end-e.episode_start)<350000
+order by
+    s.name;
+```
+
+Mastermind:
 
 ```sql
 select
