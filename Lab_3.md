@@ -78,7 +78,7 @@ where
 group by
     cid
 having
-    sum(lenmsec)>900000;
+    sum(lenmsec)>900000
 order by
     cid;
 ```
