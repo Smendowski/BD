@@ -132,18 +132,18 @@ having
 
 ---
 
-#### **Zadanie 6.** Wypisz nazwy subkategorii, dla których maksymalny czas trwania epizodów należących do danej subkategorii jest dłuższy od 10 sekund. Dodatkowo wypisz czas trwania najdłuższego epizodu i liczbę epizodów spełniających warunek dla danej subkategorii. 
+#### **Zadanie 6.** Wypisz nazwy subkategorii, dla których maksymalny czas trwania epizodów należących do danej subkategorii jest dłuższy od 10 sekund. Dodatkowo wypisz czas trwania najdłuższego epizodu i liczbę epizodów spełniających warunek dla danej subkategorii.
 
 |Subkategoria | max | count|
 |:-----------|:---:|:-----:|
 Biology | 318690 | 5
-Geography | 660330 | 11 
+Geography | 660330 | 11
 Cartoons | 11480 | 1
 (3 rows)
 
 ```sql
 select
-    s.name as Subkategoria,
+    s.name as "Subkategoria",
     max(e.episode_end-e.episode_start),
     count(s.name)
 from
@@ -153,7 +153,7 @@ from
 where
     (e.episode_end-e.episode_start)>10000
     and
-    is_movie=0
+    e.is_movie=0
 group by
     s.name
 having
@@ -181,7 +181,7 @@ from
     inner join movies_list as m on m.mid=e.mid
     inner join subcategories as s on s.sid=m.sid
 where
-    is_movie=0
+    e.is_movie=0
 group by
     s.name
 having
@@ -266,7 +266,7 @@ where
 
 ---
 
-#### **Zadanie 12.** Wypisz nazwy filmów i odnośniki URL posortowane według nazwy filmu. Jeśli odnośnik URL nie jest zdefiniowany powinien pojawić się napis "URL not defined" (użyj COALESCE). 
+#### **Zadanie 12.** Wypisz nazwy filmów i odnośniki URL posortowane według nazwy filmu. Jeśli odnośnik URL nie jest zdefiniowany powinien pojawić się napis "URL not defined" (użyj COALESCE).
 
 | title | url |
 |:---------------------------------------------------------|:------------------------------------
