@@ -1,4 +1,4 @@
-# Bazy Danych / Lab_3 Zadania
+# Bazy Danych / Lab_4 Zadania
 
 Author: @https://github.com/piotrsladowski
 
@@ -17,7 +17,7 @@ Geography | 2741565.000000000000
 (6 rows)
 
 ```sql
-select s.name, (select avg(lenmsec) from movies_list m where m.sid = s.sid) from subcategories s where s.cid=61;
+SELECT s.name, (SELECT avg(lenmsec) FROM movies_list m WHERE m.sid = s.sid) FROM subcategories s WHERE s.cid=61;
 ```
 
 ---
@@ -33,7 +33,7 @@ Bolek & Lolek - Pharaoh's tomb|
 Bolek & Lolek - Race to the North Pole|
 Bolek & Lolek - Smuggler|
 Fore Systems (advertisement)|
-Gustavus and the fly|
+Gustavus AND the fly|
 Gustavus is a muff|
 Gustavus is cheating|
 Gustavus participates in traffic|
@@ -57,7 +57,7 @@ Wystąpienie rektora AGH|
 (28 rows)
 
 ```sql
-select e.title from episodes_list e where (select cid from movies_list m where m.mid=e.mid)<>61 order by title;
+SELECT e.title FROM episodes_list e WHERE (SELECT cid FROM movies_list m WHERE m.mid=e.mid)<>61 order by title;
 ```
 
 ---
@@ -72,7 +72,7 @@ KT|
 (3 rows)
 
 ```sql
-select name from categories where (select min(lenbin) from movies_list where movies_list.cid=categories.cid)>2000000;
+SELECT name FROM categories WHERE (SELECT min(lenbin) FROM movies_list WHERE movies_list.cid=categories.cid)>2000000;
 ```
 
 ---
@@ -89,6 +89,14 @@ select name from categories where (select min(lenbin) from movies_list where mov
 (4 rows)
 
 ```sql
+SELECT epizod.title AS epizod, film.title AS film FROM episodes_list epizod INNER JOIN episodes_list film ON epizod.mid = film.mid WHERE film.is_movie = 1 AND epizod.is_movie = 0;
+matiolANDziś o 18:26
+
+SELECT COUNT(epizod.title) AS epizod, COUNT(film.mid) AS film FROM episodes_list epizod, episodes_list film WHERE epizod.mid = film.mid AND film.is_movie = 1 AND epizod.is_movie = 0 GROUP BY epizod.mid ORDER BY COUNT(epizod.title) DESC;
+
+
+
+SELECT count(SELECT film.title AS film FROM episodes_list epizod INNER JOIN episodes_list film ON epizod.mid = film.mid WHERE film.is_movie = 1 AND epizod.is_movie = 0);
 
 ```
 
@@ -117,7 +125,7 @@ select name from categories where (select min(lenbin) from movies_list where mov
 (14 rows)
 
 ```sql
-select m.mid, (select e.title from episodes_list e where e.mid=m.mid limit 1), m.lenmsec, select avg(lenmsec) from movies_list where mid<>m.mid) from movies_list m where lenmsec > (select avg(lenmsec) from movies_list);
+SELECT m.mid, (SELECT e.title FROM episodes_list e WHERE e.mid=m.mid limit 1), m.lenmsec, (SELECT avg(lenmsec) FROM movies_list WHERE mid<>m.mid) as "avg lenmsec excl. given mid" FROM movies_list m WHERE lenmsec > (SELECT avg(lenmsec) FROM movies_list);
 ```
 
 
@@ -138,7 +146,7 @@ Telecommunications | 6965989 | 5 |
 (8 rows)
 
 ```sql
-select s.name, (select max(lenmsec) from movies_list where sid=s.sid), (select count(*) from movies_list where sid=s.sid) from subcategories s where (select sum(lenmsec) from movies_list m where m.sid = s.sid)>1000000;
+SELECT s.name, (SELECT max(lenmsec) FROM movies_list WHERE sid=s.sid), (SELECT count(*) FROM movies_list WHERE sid=s.sid) FROM subcategories s WHERE (SELECT sum(lenmsec) FROM movies_list m WHERE m.sid = s.sid)>1000000;
 ```
 
 ---
@@ -152,6 +160,44 @@ Biology | 142582.000000000000 | 5 |
 Geography | 194136.363636363636 | 11 |
 (2 rows)
 
+```sql
+SELECT s.name, (SELECT avg(episode_end-episode_start) FROM movies_list m INNER JOIN episodes_list e ON m.mid = e.mid WHERE m.sid = s.sid AND e.is_movie=0), (SELECT count(e.title) FROM episodes_list e INNER JOIN movies_list m ON m.mid = e.mid WHERE m.sid = s.sid AND e.is_movie=0) FROM subcategories s WHERE (SELECT avg(episode_end-episode_start) FROM movies_list m INNER JOIN episodes_list e ON m.mid = e.mid WHERE m.sid = s.sid AND e.is_movie=0)>15000;
+```
+
+I wersja czytelniejsza
+
+```sql
+SELECT 
+  s.name, 
+  (SELECT 
+    avg(episode_end-episode_start) 
+   FROM 
+    movies_list m 
+    INNER JOIN episodes_list e ON m.mid = e.mid 
+    WHERE m.sid = s.sid 
+    AND 
+    e.is_movie=0), 
+  (SELECT 
+    count(e.title) 
+  FROM 
+    episodes_list e INNER JOIN movies_list m ON m.mid = e.mid 
+  WHERE 
+    m.sid = s.sid 
+    AND 
+    e.is_movie=0) 
+FROM 
+  subcategories s 
+WHERE 
+  (SELECT 
+    avg(episode_end-episode_start) 
+  FROM 
+    movies_list m 
+  INNER JOIN episodes_list e ON m.mid = e.mid 
+  WHERE 
+    m.sid = s.sid 
+    AND 
+    e.is_movie=0)>15000;
+```
 
 ---
 
@@ -163,6 +209,11 @@ Biology | 142582.000000000000 | 5 |
 Geography | 194136.363636363636 | 11 |
 (2 rows)
 
+Tak samo jak w poprzednim zadaniu
+
+```sql
+SELECT s.name, (SELECT avg(episode_end-episode_start) FROM movies_list m INNER JOIN episodes_list e ON m.mid = e.mid WHERE m.sid = s.sid AND e.is_movie=0), (SELECT count(e.title) FROM episodes_list e INNER JOIN movies_list m ON m.mid = e.mid WHERE m.sid = s.sid AND e.is_movie=0) FROM subcategories s WHERE (SELECT avg(episode_end-episode_start) FROM movies_list m INNER JOIN episodes_list e ON m.mid = e.mid WHERE m.sid = s.sid AND e.is_movie=0)>15000;
+```
 
 ---
 
