@@ -10,10 +10,10 @@ Author: @http://github.com/marcinswistak
 
 ---
 
-#### ** Zadanie 1: ** Wyświetlić wszystkie tytuły filmów i epizodów, które zaczynają się od litery 'T' i nie kończąznakiem 'e'.
+#### Zadanie 1: Wyświetlić wszystkie tytuły filmów i epizodów, które zaczynają się od litery 'T' i nie kończąznakiem 'e'.
 
-title
----------------------------------
+| title |
+|:------|
 Technology LSA-PLUS
 The World's Deadliest Volcanoes
 The first morning
@@ -26,10 +26,10 @@ SELECT title from episodes_list WHERE title like 'T%' AND title not like '%e';
 
 ---
 
-#### **Zadanie 2: ** Wyświetlić wszystkie tytuły filmów i epizodów, które zaczynają się od litery 'T' i kończą znakiem 'e'. Użyć tylko jeden warunek.
+#### Zadanie 2: Wyświetlić wszystkie tytuły filmów i epizodów, które zaczynają się od litery 'T' i kończą znakiem 'e'. Użyć tylko jeden warunek.
 
-title
---------------
+| title |
+|:------|
 The bee
 The Big Blue
 (2 rows)
@@ -40,10 +40,10 @@ SELECT title from episodes_list WHERE title like 'T%e';
 
 ---
 
-#### **Zadanie 3.**  Na dwa sposoby wyświetlić tytuły filmów i epizodów które zawierają słowo 'The' lub 'the'
+#### Zadanie 3: Na dwa sposoby wyświetlić tytuły filmów i epizodów które zawierają słowo 'The' lub 'the'
 
-title
-----------------------------------------
+|title|
+|:----|
 Gustavus and the fly
 The World's Deadliest Volcanoes
 Southern Africa Safari
@@ -62,10 +62,10 @@ SELECT title from episodes_list WHERE title ~ '.*[T][h][e].*' OR title ~'.*[t][h
 ```
 ---
 
-#### **Zadanie 4.**  Wyświetlić tytuły filmów i epizodów w których występuje cyfra ze zbioru: 0, 1, 2, 3, 5, 6.
+#### Zadanie 4: Wyświetlić tytuły filmów i epizodów w których występuje cyfra ze zbioru: 0, 1, 2, 3, 5, 6.
 
-title
----------------------------------------------------------
+| title |
+|:------|
 OVS Sample 1
 OVS MPEG1 1536k
 OVS MPEG1 2048k
@@ -84,10 +84,10 @@ SELECT title from episodes_list WHERE title ~ '.*[012356].*';
 
 ---
 
-#### **Zadanie 5.** Wyświetlić tytuły filmów i epizodów w których występują koło siebie cztery dowolne cyfry ze zbioru: 0, 1, 2, 3, 5, 6
+#### Zadanie 5: Wyświetlić tytuły filmów i epizodów w których występują koło siebie cztery dowolne cyfry ze zbioru: 0, 1, 2, 3, 5, 6
 
-|title|
-|:-----------------:|
+| title |
+|:-----:|
 OVS MPEG1 1536k
 (1 row)
 
@@ -97,10 +97,10 @@ SELECT title from episodes_list WHERE title ~ '.*[0-356][0-356][0-356][0-356].*'
 
 ---
 
-#### **Zadanie 6.** Wyświetlić identyfikatory filmów dla których rozmiar pliku (lenbin) zawiera się w granicach 10 000 000 i 30 000 000. Zastosowć operator between.
+#### Zadanie 6: Wyświetlić identyfikatory filmów dla których rozmiar pliku (lenbin) zawiera się w granicach 10 000 000 i 30 000 000. Zastosowć operator between.
 
-mid
------
+| mid |
+|:---:|
  70
 108
 (2 rows)
@@ -111,7 +111,7 @@ SELECT mid from movies_list WHERE lenbin BETWEEN 10000000 AND 30000000;
 
 ---
 
-#### **Zadanie 7.** Wyświetlić tytuły filmów z zadania 6. Posłużyć się podzapytaniem (nie krzyżować tabel) i operatorem in.
+#### Zadanie 7: Wyświetlić tytuły filmów z zadania 6. Posłużyć się podzapytaniem (nie krzyżować tabel) i operatorem in.
 
 | Nazwa podkategorii | max | count |
 |:-------------------|:---:|:-----:|
