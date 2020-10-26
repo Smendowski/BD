@@ -11,3 +11,5 @@
 ### Zadania [Lab_5](http://github.com/piotrsladowski/BD/blob/main/Lab_5.md) *by @Smendowski*
 
 ### Wstęp [Lab_7](http://github.com/piotrsladowski/BD/blob/main/Lab_7.md) *by @hbery*
+
+### Zadania [Lab_6](http://github.com/piotrsladowski/BD/blob/main/Lab_6.md) *by @marcinswistak*
