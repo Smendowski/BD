@@ -1,7 +1,3 @@
-
-
-SELECT title from episodes_list WHERE title like 'T%' AND title not like '%e';
-
 # Bazy Danych / Lab_ Zadania
 
 Author: @http://github.com/marcinswistak 
@@ -12,8 +8,8 @@ Author: @http://github.com/marcinswistak
 
 #### ** Zadanie 1: ** Wyświetlić wszystkie tytuły filmów i epizodów, które zaczynają się od litery 'T' i nie kończąznakiem 'e'.
 
-title
----------------------------------
+|title|
+|:---------------------------------:|
 Technology LSA-PLUS
 The World's Deadliest Volcanoes
 The first morning
