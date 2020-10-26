@@ -86,8 +86,8 @@ SELECT title from episodes_list WHERE title ~ '.*[012356].*';
 
 #### **Zadanie 5.** Wyświetlić tytuły filmów i epizodów w których występują koło siebie cztery dowolne cyfry ze zbioru: 0, 1, 2, 3, 5, 6
 
-title
------------------
+|title|
+|:-----------------:|
 OVS MPEG1 1536k
 (1 row)
 
