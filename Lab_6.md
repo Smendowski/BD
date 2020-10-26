@@ -9,9 +9,6 @@ Author: @http://github.com/marcinswistak
 #### Zadanie 1: Wyświetlić wszystkie tytuły filmów i epizodów, które zaczynają się od litery 'T' i nie kończąznakiem 'e'.
 
 
-|title|
-|:---------------------------------:|
-
 | title |
 |:------:|
 
