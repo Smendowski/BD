@@ -89,17 +89,8 @@ SELECT name FROM categories WHERE (SELECT min(lenbin) FROM movies_list WHERE mov
 (4 rows)
 
 ```sql
-SELECT epizod.title AS epizod, film.title AS film FROM episodes_list epizod INNER JOIN episodes_list film ON epizod.mid = film.mid WHERE film.is_movie = 1 AND epizod.is_movie = 0;
-matiolANDziś o 18:26
-
-SELECT COUNT(epizod.title) AS epizod, COUNT(film.mid) AS film FROM episodes_list epizod, episodes_list film WHERE epizod.mid = film.mid AND film.is_movie = 1 AND epizod.is_movie = 0 GROUP BY epizod.mid ORDER BY COUNT(epizod.title) DESC;
-
-
-
-SELECT count(SELECT film.title AS film FROM episodes_list epizod INNER JOIN episodes_list film ON epizod.mid = film.mid WHERE film.is_movie = 1 AND epizod.is_movie = 0);
-
+select my.cnt as "no of episodes", count(my.mid) as "no of films" from (select mid, count(eid)-1 as cnt from episodes_list group by mid) as my group by my.cnt order by my.cnt DESC;
 ```
-
 
 ---
 
@@ -217,6 +208,8 @@ SELECT s.name, (SELECT avg(episode_end-episode_start) FROM movies_list m INNER J
 
 ---
 
+## Widoki
+
 
 #### **Zadanie 9.** Utworzyć widok o nazwie srednie_v (polecenie CREATE VIEW) zawierający nazwy podkategorii należących do kategorii „Education” oraz średnie czasy trwania filmów w poszczególnych podkategoriach. Wyświetlić dane z widoku srednie_v. 
 
@@ -229,6 +222,12 @@ Telecommunications | 3715850.000000000000 |
 Mathematics |
 Geography | 2741565.000000000000 |
 (6 rows)
+
+
+```sql
+CREATE VIEW srednie_v AS SELECT s.name, (SELECT avg(lenmsec) FROM movies_list m WHERE m.sid = s.sid) FROM subcategories s WHERE s.cid=61;
+```
+Później wyświetlacie normalnie jak z tabeli, np `SELECT * FROM srednie_v;`
 
 ---
 
@@ -245,10 +244,17 @@ Mathematics |
 Geography | 2741565.000000000000 |
 (6 rows)
 
+
+```sql
+CREATE table srednie_t AS SELECT s.name, (SELECT avg(lenmsec) FROM movies_list m WHERE m.sid = s.sid) FROM subcategories s WHERE s.cid=61; SELECT * FROM srednie_t;
+```
+
 ---
 
 
 #### **Zadanie 11.**  Jeden z filmów należących do podkategorii „Biology” ma czas trwania równy 6363459. Zmienić czas trwania tego filmu na 1 000 000.<br> Następnie wyświetlić zawartość widoku srednie_v:
+
+mid tego filmu to 124
 
 | name | avg |
 |:--:|:--:|
@@ -274,3 +280,31 @@ Geography | 2741565.000000000000 |
 
 Dlaczego średnia długość filmów należących do kategorii „Biology” zmieniła się w przypadku widoku
 srednie_v a nie zmieniła w tabeli srednie_t ?
+
+
+```sql
+update movies_list set lenmsec=1000000 where mid=124; SELECT * FROM srednie_v; SELECT * FROM srednie_t;
+```
+
+Ponieważ widok operuje na oryginalnej tabeli, a tworzenie nowej tabeli tworzy nową tabelę.
+
+---
+
+## Zastosowanie rozkazu select przy aktualizacji bazy
+
+
+#### **Zadanie 12.**  Ustawić pole „sysflags” w tabeli movies_list na wartość 7 dla tego filmu, dla którego czas trwania jest najdłuższy ze wszystkich filmów
+
+
+```sql
+UPDATE movies_list SET sysflags=7 WHERE mid=(SELECT mid FROM movies_list where lenmsec=(SELECT MAX(lenmsec) FROM movies_list));
+```
+
+---
+
+#### **Zadanie 13.**  Ustawić pole „sysflags” w tabeli movies_list na wartość 8 dla tych filmów, które są najkrótsze w swoich podkategoriach.
+
+NIE DZIAŁA, ale jakiś początek
+```sql
+UPDATE movies_list SET sysflags=8 WHERE lenmsec=(SELECT MIN(m.lenmsec) FROM movies_list m GROUP BY sid);
+```
