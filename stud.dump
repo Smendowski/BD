@@ -1,0 +1,193 @@
+BEGIN;
+CREATE TABLE categories (
+    cid integer,
+    name character varying(30),
+    cserid integer
+);
+
+CREATE TABLE subcategories (
+    sid integer,
+    name character varying(30),
+    cid integer,
+    sserid integer
+);
+
+CREATE TABLE movies_list (
+    mid integer,
+    sysflags integer,
+    lenbin integer,
+    stream integer,
+    compress character varying(16),
+    dimensions character varying(16),
+    fps integer,
+    cid integer,
+    sid integer,
+    author character varying(256),
+    lenmsec integer,
+    filename character varying(256),
+    tokenrate integer,
+    bucketsize integer,
+    peakbitrate integer,
+    license character varying(256),
+    expiry date,
+    mserid integer
+);
+
+CREATE TABLE episodes_list (
+    eid integer,
+    mid integer,
+    episode_start integer,
+    episode_end integer,
+    descrhtml character varying(256),
+    title character varying(256),
+    keywords character varying(1024),
+    is_movie integer,
+    eserid integer,
+    descrtype integer
+);
+
+COPY categories (cid, name, cserid) FROM stdin;
+60      Amusement       1
+61      Education       1
+62      Others  1
+63      Commercial      1
+64      KT      1
+\.
+
+COPY subcategories (sid, name, cid, sserid) FROM stdin;
+59      Biology 61      1
+60      Physics 61      1
+61      Technology      61      1
+62      Telecommunications      61      1
+56      Others  62      2
+71      Advertisement   60      1
+54      Telecommunications      63      2
+72      budowa  64      1
+74      wykłady 64      1
+53      Mathematics     61      5
+58      Geography       61      3
+52      Cartoons        60      5
+51      Movies  60      15
+\.
+
+COPY movies_list (mid, sysflags, lenbin, stream, compress, dimensions, fps, cid, sid, author, lenmsec, filename, tokenrate, bucketsize, peakbitrate, license, expiry, mserid) FROM stdin;
+91      0       53704966        1500000 MPEG 1  352x288 25000   60      52              286426  /mds/video/gustaw2.mpi  250000  250000  275000          \N      3
+93      0       35858352        1000000 MPEG 1  352x288 25000   60      52              286866  /mds/video/gustaw4.mpi  166666  166666  183332          \N      2
+94      0       43606672        1200000 MPEG 1  352x288 25000   60      52              290711  /mds/video/gustaw5.mpi  200000  200000  220000          \N      2
+89      0       56059780        1500000 MPEG 1  352x288 25000   60      52              298985  /mds/video/gustaw.mpi   250000  250000  275000          \N      2
+70      0       13747736        1536000 MPEG 1  352x240 29970   63      54              71602   /mds/video/ovs_ftbx_samp1.mpi   256000  256000  281600  Oracle  \N      8
+69      0       8346116 1536000 MPEG 1  352x240 29970   63      54      Oracle  43469   /mds/video/ovs_cmmg_samp1.mpi   256000  256000  281600  Oracle  2000-12-31      5
+63      0       4902560 1242800 MPEG 1  352x240 29970   63      54              31558   /mds/video/fore.mpi     207133  207133  227846  Fore Systems    \N      8
+79      0       5803884 1536000 MPEG 1  352x240 29970   64      57              30228   /mds/video/ovs_mpg1_1536k.mpi   256000  256000  281600  Oracle  \N      4
+80      0       1207364304      1776800 MPEG 1  352x288 25000   \N      \N      William Pearlman        5436129 /mds/video/2kaseta-1_5Mbps.mpi  296133  296133  325746  IEEE    \N      4
+105     0       7943240 2048000 MPEG 1  352x288 25000   64      57              31028   /mds/video/ovs_mpg1_2048k_pal.mpi       341333  341333  375466  Oracle  \N      2
+109     0       6195188 1536000 MPEG 1  352x240 29970   63      54              32266   /mds/video/ovs_samp_intro.mpi   256000  256000  281600  Oracle  \N      4
+122     0       352354726       621600  MPEG 1  352x288 25000   61      59      Claude Nuridsany & Marie Perennou       4534809 /mds/video/MICRO600.mpi 103600  103600  113960  BestFilm        \N      3
+101     0       1009801022      1500000 MPEG 1  352x288 25000   61      62      John W. Woods   5385605 /mds/video/kas5.mpi     250000  250000  275000  IEEE    \N      1
+98      0       1245073440      1810400 MPEG 1  352x288 25000   61      62      William Pearlman        5501871 /mds/video/kas1.mpi     301733  301733  331906  IEEE    \N      2
+100     2       1306123074      1500000 MPEG 1  352x288 25000   61      62      William Pearlman        6965989 /mds/video/kas4.mpi     250000  250000  275000  IEEE    \N      2
+119     0       355719520       1500000 MPEG 1  352x288 25000   61      61              1897170 /mds/video/kable_napow.mpi      250000  250000  275000  L & L   \N      1
+124     0       494443602       621600  MPEG 1  352x288 25000   61      59              6363459 /mds/video/SAGA600.mpi  103600  103600  113960          \N      2
+120     0       126728368       1500000 MPEG 1  352x288 25000   61      62              675884  /mds/video/krone.mpi    250000  250000  275000  Krone   \N      3
+111     0       1204162014      1500000 MPEG 1  352x288 25000   61      59              6422197 /mds/video/saga.mpi     250000  250000  275000          \N      4
+111     0       1204162014      1500000 MPEG 1  352x288 25000   61      59              6422197 /mds/video/saga.mpi     250000  250000  275000          \N      4
+110     0       669678080       1500000 MPEG 1  352x288 25000   61      59              3571616 /mds/video/safarii.mpi  250000  250000  275000          \N      3
+85      0       102987778       1500000 MPEG 1  352x288 25000   60      52      Studio filmów rysunkowych w Bielsku Białej      549268  /mds/video/bolek4.mpi   250000  250000  275000  TVP     \N      5
+87      0       103758176       1500000 MPEG 1  352x288 25000   60      52      Studio filmów rysunkowych w Bielsku Białej      553376  /mds/video/bolek6.mpi   250000  250000  275000  TVP     \N      4
+86      0       109065202       1500000 MPEG 1  352x288 25000   60      52      Studio filmów rysunkowych w Bielsku Białej      581681  /mds/video/bolek5.mpi   250000  250000  275000  TVP     \N      4
+83      0       103771948       1500000 MPEG 1  352x288 25000   60      52      Studio filmów rysunkowych w Bielsku Białej      553450  /mds/video/bolek2.mpi   250000  250000  275000  TVP (Telewizja Polska)  \N      4
+84      0       106680778       1500000 MPEG 1  352x288 25000   60      52      Studio filmów rysunkowych w Bielsku Białej      568964  /mds/video/bolek3.mpi   250000  250000  275000  TVP     \N      3
+82      0       113880554       1500000 MPEG 1  352x288 25000   60      52      Studio filmów rysunkowych w Bielsku Białej      607362  /mds/video/bolek1.mpi   250000  250000  275000  TVP (Telewizja Polska)  \N      14
+129     0       189391984       2000000 MPEG 1  352x288 25000   64      74      Zdzisław Papir  757567  /mds/video/wyklad1.mpi  192000  192000  230400  Katedra Telekomunikacji AGH     \N      1
+130     0       149020312       2000000 MPEG 1  352x288 25000   64      74              596081  /mds/video/wyklad3.mpi  192000  192000  230400  Katedra Telekomunikacji AGH     \N      3
+103     0       821150720       1500000 MPEG 1  352x288 25000   61      59      Claude Nuridsany & Marie Perennou       4379470 /mds/video/mikro.mpi    250000  250000  275000  BestFilm - testowa      \N      8
+128     256     158728192       1500000 MPEG 1  352x288 25000   64      72      Katedra Telekomunikacji AGH     846550  /mds/video/zembiec.mpi  192000  192000  230400          \N      3
+121     0       227722560       400000  MPEG 1  352x288 25000   61      59      Claude Nuridsany & Marie Perennou       4554451 /mds/video/MICRO400.mpi 66666   66666   73332   BestFilm        \N      2
+140     0       74256610        2033600 MPEG 1  352x288 25000   63      54      Lucent Technologies     292118  /mds/video/lucent1.mpi  192000  192000  230400          \N      2
+141     0       82223964        2033600 MPEG 1  352x288 25000   63      54      Lucent Technologies     323461  /mds/video/lucent2.mpi  192000  192000  230400          \N      1
+92      8       51288436        1500000 MPEG 1  352x288 25000   60      52              273538  /mds/video/gustaw3.mpi  250000  250000  275000          \N      3
+104     8       7720748 2048000 MPEG 1  352x240 29970   64      57              30159   /mds/video/ovs_mpg1_2048k.mpi   341333  341333  375466  Oracle  \N      1
+77      8       30270184        1536000 MPEG 1  352x240 29970   61      61      FAT Box 157657  /mds/video/ovs_ftbx_samp2.mpi   256000  256000  281600  Rotary Rocket Company   \N      2
+72      8       1907088 1536000 MPEG 1  352x240 29970   63      54              9932    /mds/video/ovs_cmmg_samp2.mpi   256000  256000  281600  Oracle  \N      13
+106     8       9581044 1536000 MPEG 1  352x240 29970   61      62              49901   /mds/video/ovs_mwv_samp1.mpi    256000  256000  281600  Oracle Corporation      \N      1
+108     8       29862272        1536000 MPEG 1  352x240 29970   60      71              155532  /mds/video/ovs_mwv_samp3.mpi    256000  256000  281600          \N      5
+132     8       33670644        1500000 MPEG 1  352x288 25000   64      74              179576  /mds/video/rektor.mpi   192000  192000  230400  Katedra Telekomunikacji AGH     \N      3
+131     8       209655760       2000000 MPEG 1  352x288 25000   64      72              838623  /mds/video/zembiec2.mpi 192000  192000  230400  Katedra Telekomunikacji AGH     \N      1
+123     8       164498880       400000  MPEG 1  352x288 25000   61      59              3289977 /mds/video/SAGA400.mpi  66666   66666   73332           \N      2
+112     8       514043596       1500000 MPEG 1  352x288 25000   61      58              2741565 /mds/video/volcanos.mpi 230000  380000  380000          \N      7
+113     8       1289308208      1500000 MPEG 1  352x288 25000   60      51              6876310 /mds/video/deep_blue.mpi        250000  400000  450000  Gaumont \N      5
+\.
+
+COPY episodes_list (eid, mid, episode_start, episode_end, descrhtml, title, keywords, is_movie, eserid, descrtype) FROM stdin;
+121     91      0       286426  \N      Gustavus wants to marry         1       3       1
+122     92      0       273538  \N      Gustavus participates in traffic                1       3       1
+123     93      0       286866  \N      Gustavus is a muff              1       2       1
+124     94      0       290711  \N      Gustavus and the fly            1       2       1
+119     89      0       298985  \N      Gustavus is cheating            1       2       1
+100     70      0       71602   \N      Intranet (advertisement)                1       7       1
+97      69      0       43469   \N      OVS Sample 1            1       5       1
+86      63      0       31558   \N      Fore Systems (advertisement)            1       1       1
+109     79      0       30228   http://www.oracle.com   OVS MPEG1 1536k         1       4       0
+134     104     0       30159   \N      OVS MPEG1 2048k         1       1       1
+135     105     0       31028   \N      OVS MPEG1 2048k PAL             1       2       1
+107     77      0       157657  \N      Revolution to orbit             1       2       1
+139     109     0       32266   \N      OVS Introduction                1       4       1
+102     72      0       9932    \N      OVS Sample 2            1       2       1
+131     101     0       5385605 \N      Video coding            1       1       1
+128     98      0       5501871 \N      Image coding (part 1)           1       2       1
+130     100     0       6965989 \N      Image coding (part 4)           1       2       1
+110     80      0       5436129 \N      Image coding (part 2)           1       4       1
+136     106     0       49901   \N      Course in a box         1       1       1
+138     108     0       155532  \N      Infomercial             1       5       1
+167     112     848160  922340          Nevado del Ruiz (Colombia)      Nevado del Ruiz Colombia Armero volcano 0       3       1
+171     112     1660400 1769500 \N      Volcanoes under glacier Vatnajökull (Iceland)   volcano glacier Vatnajökull Iceland     0       3       1
+174     112     2418340 2456750 \N      Krakatau (Indonesia)    Krakatau Indonesia volcano      0       1       1
+157     120     0       675884  \N      Technology LSA-PLUS             1       3       1
+169     112     1002580 1351670         Soufriere Hills (Montserrat, West Indies)       Soufriere Hills West Indies volcano     0       4       1
+172     112     1854750 2100540 \N      Mount St. Helens (Washington, USA)      Mount St. Helens Washington USA volcano 0       3       1
+173     112     2105000 2277210         Mount Rainier (Washington, USA) Mount Rainier Washington USA volcano    0       3       1
+175     112     2458060 2555790 \N      Galunggung, Tambora, Toba (Indonesia)   Galunggung Tambora Toba Java Indonesia volcano  0       2       1
+158     121     0       4554451 ../html_descriptions/microcosmos        Microcosmos (low quality)               1       2       0
+159     122     0       4534809 ../html_descriptions/microcosmos        Microcosmos (medium quality)            1       3       0
+156     119     0       1897170 ../html_descriptions/cable_LL   Overhead telecommunications lines               1       1       0
+142     112     0       2741565 ../html_descriptions/deadliest_volcanoes        The World's Deadliest Volcanoes         1       2       0
+165     112     104430  764760  ../html_descriptions/deadliest_volcanoes/kilauea.html   Kilauea (Hawaii, USA)   Kilauea Hawaii USA Hawai'i volcano      0       4       0
+166     112     803170  840430  ../html_descriptions/deadliest_volcanoes/pacaya.html    Pacaya (Guatemala)      Pacaya Guatemala volcano        0       2       0
+168     112     930100  1002200 ../html_descriptions/deadliest_volcanoes/popo.html      Popocatepetl (Mexico)   Popocatepetl Mexico volcano capital city        0       2       0
+170     112     1366870 1646170 ../html_descriptions/deadliest_volcanoes/heimaey.html   Eldfell (Heimaey, Iceland)      Heimaey Iceland volcano Eldfell 0       3       0
+141     111     0       6422197 ../html_descriptions/saga_of_life       Saga of life (high quality)             1       4       0
+160     123     0       3289977 ../html_descriptions/saga_of_life       Saga of life (low quality)              1       2       0
+161     124     0       6363495 ../html_descriptions/saga_of_life       Saga of life (medium quality)           1       2       0
+140     110     0       3571616 ../html_descriptions/safari     Southern Africa Safari          1       3       0       
+140     110     0       3571616 ../html_descriptions/safari     Southern Africa Safari          1       3       0
+115     85      0       549268  ../html_descriptions/bolek_lolek        Bolek & Lolek - Gold town       Bolek Lolek america     1       5       0
+117     87      0       553376  ../html_descriptions/bolek_lolek        Bolek & Lolek - On tiger's trails       Bolek Lolek tiger India 1       3       0
+116     86      0       581681  ../html_descriptions/bolek_lolek        Bolek & Lolek - Pharaoh's tomb  Bolek Lolek Pharaoh tomb        1       3       0
+113     83      0       553450  ../html_descriptions/bolek_lolek        Bolek & Lolek - Race to the North Pole  Bolek Lolek pole winter 1       4       0
+114     84      0       568964  ../html_descriptions/bolek_lolek        Bolek & Lolek - Smuggler        Bolek Lolek smuggler    1       3       0
+112     82      0       607362  ../html_descriptions/bolek_lolek        Bolek & Lolek - Australian steppes      Bolek Lolek australia stepp     1       14      0
+144     103     64920   133780  ../html_descriptions/microcosmos/landing.html   Landing microcosmos landing     0       4       0
+145     103     224020  542710  ../html_descriptions/microcosmos/f_morning.html The first morning       microcosmos morning     0       2       0
+146     103     550840  622710  ../html_descriptions/microcosmos/bee.html       The bee microcosmos the bee     0       4       0
+147     103     657890  796890  ../html_descriptions/microcosmos/ladybird.html  The ladybird    The ladybird microcosmos        0       3       0
+148     103     896910  1011400 ../html_descriptions/microcosmos/snails.html    Snails' sexual act      Snails' sexual act microcosmos snail    0       2       0
+183     129     0       757567  \N      Matematyczny model transmisji pakietów w kanale (M/M/1) mm1 m/m/1 transmisja kanal model papir  1       1       1
+184     130     0       596081  http://www.kt.agh.edu.pl/prez/sld001.html       Prezentacja Katedry Telekomunikacji AGH katedra telekomunikacja agh bti jajszczyk papir pach dziech     1       3       1
+133     103     0       4379470 ../html_descriptions/microcosmos        Microcosmos (high quality)      microcosmos Andrzej     1       8       0
+187     132     0       147567  http://www.agh.edu.pl/tad/index.html    Wystąpienie rektora AGH Tadeusiewicz rektor AGH Katdetra Telekomunikacji telekomunikacja TPSA   1       3       0
+185     131     0       837623  ../html_descriptions/zembiec    Nowy budynek KT         1       1       0
+182     128     0       846550  ../html_descriptions/zembiec    Nowy budynek KT zembiec 1       3       0
+150     113     0       6876310 \N      The Big Blue            1       5       1
+193     83      141290  152770          fragment                0       1       0
+197     130     91550   98520           prof. Jajszczyk         0       1       0
+198     140     0       292118  \N      Lucent 1        Lucent, telecommunication       1       2       1
+199     141     0       323461  \N      Lucent 2        Lucent, telecommunication       1       1       1
+\.
+
+
+CREATE UNIQUE INDEX categories_index ON categories USING btree (name);
+CREATE UNIQUE INDEX subcategories_index ON subcategories USING btree (name, cid);
+CREATE INDEX movies_2_index ON movies_list USING btree (mid, cid, sid);
+CREATE INDEX episodes_2_index ON episodes_list USING btree (eid, mid, is_movie);
+
+COMMIT;
