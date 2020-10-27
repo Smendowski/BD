@@ -57,7 +57,7 @@ Wystąpienie rektora AGH|
 (28 rows)
 
 ```sql
-SELECT e.title FROM episodes_list e WHERE (SELECT cid FROM movies_list m WHERE m.mid=e.mid)<>61 order by title;
+SELECT e.title FROM episodes_list e WHERE (SELECT cid FROM movies_list m WHERE m.mid=e.mid)<>61 AND e.is_movie=1 order by title;
 ```
 
 ---
