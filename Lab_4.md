@@ -304,7 +304,6 @@ UPDATE movies_list SET sysflags=7 WHERE mid=(SELECT mid FROM movies_list where l
 
 #### **Zadanie 13.**  Ustawić pole „sysflags” w tabeli movies_list na wartość 8 dla tych filmów, które są najkrótsze w swoich podkategoriach.
 
-NIE DZIAŁA, ale jakiś początek
 ```sql
 update movies_list set sysflags=8 from (select min(lenmsec) from movies_list where sid is not null group by sid) as mo where lenmsec=mo.min;
 ```
