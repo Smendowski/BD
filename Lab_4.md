@@ -306,5 +306,5 @@ UPDATE movies_list SET sysflags=7 WHERE mid=(SELECT mid FROM movies_list where l
 
 NIE DZIAŁA, ale jakiś początek
 ```sql
-UPDATE movies_list SET sysflags=8 WHERE lenmsec=(SELECT MIN(m.lenmsec) FROM movies_list m GROUP BY sid);
+update movies_list set sysflags=8 from (select min(lenmsec) from movies_list where sid is not null group by sid) as mo where lenmsec=mo.min;
 ```
