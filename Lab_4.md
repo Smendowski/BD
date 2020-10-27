@@ -283,7 +283,7 @@ srednie_v a nie zmieniła w tabeli srednie_t ?
 
 
 ```sql
-update movies_list set lenmsec=1000000 where mid=124; SELECT * FROM srednie_v; SELECT * FROM srednie_t;
+UPDATE movies_list SET lenmsec=1000000 WHERE mid=(SELECT mid FROM movies_list WHERE lenmsec=6363459); SELECT * FROM srednie_v; SELECT * FROM srednie_t;
 ```
 
 Ponieważ widok operuje na oryginalnej tabeli, a tworzenie nowej tabeli tworzy nową tabelę.
@@ -305,5 +305,5 @@ UPDATE movies_list SET sysflags=7 WHERE mid=(SELECT mid FROM movies_list where l
 #### **Zadanie 13.**  Ustawić pole „sysflags” w tabeli movies_list na wartość 8 dla tych filmów, które są najkrótsze w swoich podkategoriach.
 
 ```sql
-update movies_list set sysflags=8 from (select min(lenmsec) from movies_list where sid is not null group by sid) as mo where lenmsec=mo.min;
+UPDATE movies_list SET sysflags=8 FROM (SELECT min(lenmsec) FROM movies_list WHERE sid is not null GROUP BY sid) AS mo WHERE lenmsec=mo.min;
 ```
