@@ -225,9 +225,8 @@ Geography | 2741565.000000000000 |
 
 
 ```sql
-CREATE VIEW srednie_v AS SELECT s.name, (SELECT avg(lenmsec) FROM movies_list m WHERE m.sid = s.sid) FROM subcategories s WHERE s.cid=61;
+CREATE VIEW srednie_v AS SELECT s.name, (SELECT avg(lenmsec) FROM movies_list m WHERE m.sid = s.sid) FROM subcategories s WHERE s.cid=61; SELECT * FROM srednie_v;
 ```
-Później wyświetlacie normalnie jak z tabeli, np `SELECT * FROM srednie_v;`
 
 ---
 
