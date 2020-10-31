@@ -5,7 +5,7 @@ Author: @https://github.com/Smendowski
 ---
 
 #### **Zadanie 1.** Wyświetlić nazwę kategorii i sumę czasów trwania filmów należących do poszczególnych kategorii. Użyj CROSS JOIN.
-
+<font size="2">Brzydka wersja zapytania</font>
 ```sql
 SELECT c.name, SUM(CASE WHEN c.cid = m.cid THEN m.lenmsec ELSE 0 END)
     FROM categories c CROSS JOIN movies_list m
@@ -13,14 +13,41 @@ SELECT c.name, SUM(CASE WHEN c.cid = m.cid THEN m.lenmsec ELSE 0 END)
     ORDER BY c.name ASC
     LIMIT 4;
 ```
-
-```diff
-- 'CROSS' JOIN samo w sobie to połączenie bezwarunkowe działające jak iloczyn kartezjański.
-+ Sumujemy ze sobą czasy filmów należących tylko do tej samej kategorii.
-! 'LIMIT' ogranicza nam liczbę wyświetlanych wierszy. Pomijamy przez to kategorię 'Others'.
+<font size="2">Poprawna wersja zapytania</font>
+```sql
+SELECT c.name, SUM(m.lenmsec) FROM categories c CROSS JOIN movies_list m WHERE c.cid=m.cid GROUP BY c.name ORDER BY c.name;
 ```
 
 #### **Zadanie 2.**  Policzyć ile epizodów (jako episode nr) należy do danego filmu. Wypisać tytuły filmów, których te epizody są fragmentami (jako movie). Posortować według tytułu filmu (rosnąco). Dodatkowo wyświetlić nazwę kategorii i podkategorii. Użyj CROSS JOIN.
+<font size="2">Czytelnie formatowanie zapytania</font>
+```sql
+SELECT  COUNT(*) AS "episode nr",
+        e1.title AS "movie",
+        c.name AS "category",
+        s.name AS "subcategory"
+FROM 
+    # Dwa razy kożystamy z tabeli espisodes_list bo będziemy
+    # potrzebowali zarówno pełnych filmów jak i epizodów.
+    episodes_list e1
+    CROSS JOIN episodes_list e2
+    CROSS JOIN categories c
+    CROSS JOIN subcategories s
+    CROSS JOIN movies_list m
+WHERE
+    e1.mid=e2.mid
+    AND e1.is_movie=1
+    AND e2.is_movie=0
+    AND m.mid=e1.mid
+    AND m.cid=c.cid
+    AND m.sid=s.sid   
+GROUP BY e1.title, c.name, s.name ORDER BY ASC;
+```
+<font size="2">Jednolinijkowiec</font>
+```sql
+SELECT COUNT(*) AS "episode nr", e1.title AS "movie", c.name AS "category" ,s.name AS "subcategory" FROM episodes_list e1 CROSS JOIN episodes_list e2 CROSS JOIN categories c CROSS JOIN subcategories s CROSS JOIN movies_list m WHERE e1.mid=e2.mid AND e1.is_movie=1 AND e2.is_movie=0 AND m.mid=e1.mid AND m.cid=c.cid AND m.sid=s.sid GROUP BY e1.title, c.name, s.name ORDER BY 2;
+```
+<font size="2">Komentarz: ORDER BY 2 oznacza ORDER BY 2-ga kolumna wymieniona w zapytaniu SELECT</font>
+
 
 #### **Zadanie 3.** Wykonaj Zadanie 1 i Zadanie 2 z użyciem INNER JOIN.
 
