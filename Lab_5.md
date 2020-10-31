@@ -58,8 +58,10 @@ SELECT c.name, sum(m.lenmsec) FROM categories c INNER JOIN movies_list m USING(c
 
 <br/>
 <font size="3">Zadanie 2 z użyciem INNER JOIN</font>
+<br>
 
-<font size="2">Czytelne formatowanie zapytania</font>
+
+**<font size="2">Czytelne formatowanie zapytania</font>**
 ```sql
 SELECT  COUNT(*) AS "episode nr", 
         e1.title, 
@@ -74,15 +76,23 @@ WHERE e1.is_movie=1 and e2.is_movie=0       # Zauważamy zaletę. Pozbylismy si�
 GROUP BY e1.title,c.name,s.name             # warunków Where dzięki USING i INNER JOIN
 ORDER BY 2;
 ```
-<font size="2">Jednolinijkowiec</font>
+**<font size="2">Jednolinijkowiec</font>**
 ```sql
 SELECT  COUNT(*) AS "episode nr", e1.title, c.name, s.name FROM episodes_list e1 INNER JOIN episodes_list e2 USING(mid) INNER JOIN movies_list m USING(mid) INNER JOIN categories c USING(cid) INNER JOIN subcategories s USING(sid) WHERE e1.is_movie=1 and e2.is_movie=0       GROUP BY e1.title,c.name,s.name ORDER BY 2;
 ```
 <div style="text-align: justify"><font size="1">Komentarz: Operując na wielu tabelach, użycie INNER JOIN pozwala nam zredukować warunki WHERE zmniejszające czytelność zapytania.</font></div>
 
 #### **Zadanie 4.** Wyświetlić tytuł filmu, NAZWĘ kategorii i NAZWĘ podkategorii, do której należy dany film. Mają byćwyświetlone wszystkie filmy, nawet te nie przypisane do kategorii.
+```sql
+SELECT e.title, c.name, s.name FROM episodes_list e LEFT JOIN movies_list m USING(mid) LEFT JOIN categories c USING(cid) LEFT JOIN subcategories s USING(sid) WHERE e.is_movie=1;
+```
+<div style="text-align: justify"><font size="1">Komentarz: LEFT JOIN jest to to samo co INNER JOIN ale dodatkowo do tabeli po "lewej stronie" dodawane są wiersze z tabeli po "prawej stronie" wyrażenia LEFT JOIN nawet jeśli nie znaleziono dopasowania przy USING()</font></div>
 
 #### **Zadanie 5.** Policzyć ile filmów należy do danej kategorii. W statystyce uwzględnić filmy, które nie należą dożadnej kategorii pod nazwą "--n/a--".
+```sql
+SELECT COUNT(*), COALESCE(c.name, '--n/a--') FROM categories c RIGHT JOIN movies_list m USING(cid) GROUP BY c.name ORDER BY c.name;
+```
+<div style="text-align: justify"><font size="1">Komentarz: RIGHT JOIN jest to to samo co INNER JOIN ale dodatkowo do tabeli po "prawej stronie" dodawane są wiersze z tabeli po "lewej stronie" wyrażenia RIGHT JOIN nawet jeśli nie znaleziono dopasowania przy USING().</font></div>
 
 #### **Zadanie 6.**  Wyświetlić listę, zawierającą dwie kolumny: tytuł epizodu, tytuł filmu. Na wyniku mają sie pojawić wszystkie filmy (nawet te, które nie posiadają epizodów).
 
