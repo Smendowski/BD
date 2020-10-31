@@ -50,7 +50,14 @@ SELECT COUNT(*) AS "episode nr", e1.title AS "movie", c.name AS "category" ,s.na
 
 
 #### **Zadanie 3.** Wykonaj Zadanie 1 i Zadanie 2 z użyciem INNER JOIN.
+<font size="2">Zadanie 1 z użyciem INNER JOIN</font>
+```sql
+SELECT c.name, sum(m.lenmsec) FROM categories c INNER JOIN movies_list m USING(cid) GROUP BY c.name ORDER BY c.name;
+```
+<font size="2">Zadanie 2 z użyciem INNER JOIN</font>
+```sql
 
+```
 #### **Zadanie 4.** Wyświetlić tytuł filmu, NAZWĘ kategorii i NAZWĘ podkategorii, do której należy dany film. Mają byćwyświetlone wszystkie filmy, nawet te nie przypisane do kategorii.
 
 #### **Zadanie 5.** Policzyć ile filmów należy do danej kategorii. W statystyce uwzględnić filmy, które nie należą dożadnej kategorii pod nazwą "--n/a--".
