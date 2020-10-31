@@ -19,7 +19,7 @@ SELECT c.name, SUM(m.lenmsec) FROM categories c CROSS JOIN movies_list m WHERE c
 ```
 
 #### **Zadanie 2.**  Policzyć ile epizodów (jako episode nr) należy do danego filmu. Wypisać tytuły filmów, których te epizody są fragmentami (jako movie). Posortować według tytułu filmu (rosnąco). Dodatkowo wyświetlić nazwę kategorii i podkategorii. Użyj CROSS JOIN.
-<font size="2">Czytelnie formatowanie zapytania</font>
+<font size="2">Czytelnie formatowane zapytanie</font>
 ```sql
 SELECT  COUNT(*) AS "episode nr",
         e1.title AS "movie",
@@ -50,16 +50,36 @@ SELECT COUNT(*) AS "episode nr", e1.title AS "movie", c.name AS "category" ,s.na
 
 
 #### **Zadanie 3.** Wykonaj Zadanie 1 i Zadanie 2 z użyciem INNER JOIN.
-<font size="2">Zadanie 1 z użyciem INNER JOIN</font>
+<font size="3">Zadanie 1 z użyciem INNER JOIN</font>
 ```sql
 SELECT c.name, sum(m.lenmsec) FROM categories c INNER JOIN movies_list m USING(cid) GROUP BY c.name ORDER BY c.name;
 ```
-<font size="1">Komentarz: Używając INNER JOIN == JOIN pozbywamy się warunku WHERE koniecznego w CROSS JOIN, który zmniejszał czytelność. USING(nazwa_kolumny) spowoduje złączenie tych wszystkich wierszy tabel biorących udział w INNER JOIN, które w kolumnach mają zgodność co do nazwa_kolumny czyli argumentu USING()</font>
+<div style="text-align: justify"><font size="1">Komentarz: Używając INNER JOIN == JOIN pozbywamy się warunku WHERE koniecznego w CROSS JOIN, który zmniejszał czytelność. USING(nazwa_kolumny) spowoduje złączenie tych wszystkich wierszy tabel biorących udział w INNER JOIN, które w kolumnach mają zgodność co do nazwa_kolumny czyli argumentu USING()</font></div>
 
-<font size="2">Zadanie 2 z użyciem INNER JOIN</font>
+<br/>
+<font size="3">Zadanie 2 z użyciem INNER JOIN</font>
+
+<font size="2">Czytelne formatowanie zapytania</font>
 ```sql
-
+SELECT  COUNT(*) AS "episode nr", 
+        e1.title, 
+        c.name, 
+        s.name 
+FROM episodes_list e1 
+    INNER JOIN episodes_list e2 USING(mid) 
+    INNER JOIN movies_list   m  USING(mid)
+    INNER JOIN categories    c  USING(cid) 
+    INNER JOIN subcategories s  USING(sid) 
+WHERE e1.is_movie=1 and e2.is_movie=0       # Zauważamy zaletę. Pozbylismy się nadmiaru
+GROUP BY e1.title,c.name,s.name             # warunków Where dzięki USING i INNER JOIN
+ORDER BY 2;
 ```
+<font size="2">Jednolinijkowiec</font>
+```sql
+SELECT  COUNT(*) AS "episode nr", e1.title, c.name, s.name FROM episodes_list e1 INNER JOIN episodes_list e2 USING(mid) INNER JOIN movies_list m USING(mid) INNER JOIN categories c USING(cid) INNER JOIN subcategories s USING(sid) WHERE e1.is_movie=1 and e2.is_movie=0       GROUP BY e1.title,c.name,s.name ORDER BY 2;
+```
+<div style="text-align: justify"><font size="1">Komentarz: Operując na wielu tabelach, użycie INNER JOIN pozwala nam zredukować warunki WHERE zmniejszające czytelność zapytania.</font></div>
+
 #### **Zadanie 4.** Wyświetlić tytuł filmu, NAZWĘ kategorii i NAZWĘ podkategorii, do której należy dany film. Mają byćwyświetlone wszystkie filmy, nawet te nie przypisane do kategorii.
 
 #### **Zadanie 5.** Policzyć ile filmów należy do danej kategorii. W statystyce uwzględnić filmy, które nie należą dożadnej kategorii pod nazwą "--n/a--".
