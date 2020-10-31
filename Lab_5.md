@@ -54,6 +54,8 @@ SELECT COUNT(*) AS "episode nr", e1.title AS "movie", c.name AS "category" ,s.na
 ```sql
 SELECT c.name, sum(m.lenmsec) FROM categories c INNER JOIN movies_list m USING(cid) GROUP BY c.name ORDER BY c.name;
 ```
+<font size="1">Komentarz: Używając INNER JOIN == JOIN pozbywamy się warunku WHERE koniecznego w CROSS JOIN, który zmniejszał czytelność. USING(nazwa_kolumny) spowoduje złączenie tych wszystkich wierszy tabel biorących udział w INNER JOIN, które w kolumnach mają zgodność co do nazwa_kolumny czyli argumentu USING()</font>
+
 <font size="2">Zadanie 2 z użyciem INNER JOIN</font>
 ```sql
 
