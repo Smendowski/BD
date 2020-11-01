@@ -95,5 +95,30 @@ SELECT COUNT(*), COALESCE(c.name, '--n/a--') FROM categories c RIGHT JOIN movies
 <div style="text-align: justify"><font size="1">Komentarz: RIGHT JOIN jest to to samo co INNER JOIN ale dodatkowo do tabeli po "prawej stronie" dodawane są wiersze z tabeli po "lewej stronie" wyrażenia RIGHT JOIN nawet jeśli nie znaleziono dopasowania przy USING().</font></div>
 
 #### **Zadanie 6.**  Wyświetlić listę, zawierającą dwie kolumny: tytuł epizodu, tytuł filmu. Na wyniku mają sie pojawić wszystkie filmy (nawet te, które nie posiadają epizodów).
+**<font size="2">Czytelne formatowanie zapytania</font>**
+```sql
+SELECT e1.title AS "movie title", e2.title AS "episode title"
+FROM
+    (SELECT mid, title FROM episodes_list WHERE is_movie=1) e1
+    FULL OUTER JOIN
+    (SELECT mid, title FROM episodes_list WHERE is_movie=0) e2
+    ON e1.mid = e2.mid;
+```
+
+**<font size="2">Jednolinijkowiec</font>**
+```sql
+SELECT e1.title AS "movie title", e2.title AS "episode title" FROM (SELECT mid, title FROM episodes_list WHERE is_movie=1) e1 FULL OUTER JOIN (SELECT mid, title FROM episodes_list WHERE is_movie=0) e2 ON e1.mid = e2.mid;
+```
+<div style="text-align: justify"><font size="1">Komentarz: W podzapytaniu pierwszym uzyskujemy tabelę z filmami. W podzaytaniu drugim uzyskujemy tabelę z epizodami. FULL JOIN dokonuje złączenia obu tabel == łączone są wiersze obu tabel jeśli spełniony jest warunek ON na kolumnach. FULL JOIN jest to LEFT JOIN + RIGHT JOIN. Nawet jeśli nie ma dopasowania to przepisujemy wiersze.</font></div>
 
 #### **Zadanie 7.** Dla każdej kategorii wyświetlić sumę długości filmów należących do niej. Dla kategorii, które niezawierają żadnych filmów suma długości ma być równa 0 (nie NULL!!!). Filmy nie należące do żadnej kategorii należy uwzględnić jako osobną kategorię bez nazwy (NULL).
+**<font size="2">Czytelne formatowanie zapytania</font>**
+```sql
+SELECT COALESCE(SUM(m.lenmsec),0) AS "case", c.name AS "name" 
+    FROM categories c FULL OUTER JOIN movies_list m
+ON m.cid = c.cid GROUP BY c.name ORDER BY c.name;
+```
+**<font size="2">Jednolinijkowiec</font>**
+```sql
+SELECT COALESCE(SUM(m.lenmsec),0) AS "case", c.name AS "name" FROM categories c FULL OUTER JOIN movies_list m ON m.cid = c.cid GROUP BY c.name ORDER BY c.name;
+```
