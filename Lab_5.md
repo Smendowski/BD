@@ -26,7 +26,7 @@ SELECT  COUNT(*) AS "episode nr",
         c.name AS "category",
         s.name AS "subcategory"
 FROM 
-    # Dwa razy kożystamy z tabeli espisodes_list bo będziemy
+    # Dwa razy korzystamy z tabeli espisodes_list bo będziemy
     # potrzebowali zarówno pełnych filmów jak i epizodów.
     episodes_list e1
     CROSS JOIN episodes_list e2
