@@ -13,3 +13,5 @@
 ### Zadania [Lab_6](http://github.com/piotrsladowski/BD/blob/main/Lab_6.md) *by @marcinswistak*
 
 ### Wstęp [Lab_7](http://github.com/piotrsladowski/BD/blob/main/Lab_7.md) *by @hbery*
+
+### Zadania [Lab_8](http://github.com/piotrsladowski/BD/blob/main/Lab_8.md) *by @piotrsladowski*
