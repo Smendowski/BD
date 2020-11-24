@@ -4,17 +4,17 @@ Author: @https://github.com/piotrsladowski
 
 ---
 
-## Individual tASks
+## Individual tasks
 
-#### **Zadanie 1.** Wyświetlić po 5 wierszy: tytuł filmu, meTOdę kompresji i nazwę kategorii, do której należy dany film. Wyniki sorTOwane po tytule. Można użyć iloczyn kartezjański.
+#### **Zadanie 1.** Wyświetlić po 5 wierszy: tytuł filmu, metodę kompresji i nazwę kategorii, do której należy dany film. Wyniki sortowane po tytule. Można użyć iloczyn kartezjański.
 
 title | compress | category
 |:--:|:--:|:--:|
 Bolek & Lolek - Australian steppes | MPEG 1 | Amusement
-Bolek & Lolek - Gold TOwn | MPEG 1 | Amusement
+Bolek & Lolek - Gold Town | MPEG 1 | Amusement
 Bolek & Lolek - On tiger's trails | MPEG 1 | Amusement
-Bolek & Lolek - Pharaoh's TOmb | MPEG 1 | Amusement
-Bolek & Lolek - Race TO the North Pole | MPEG 1 | Amusement
+Bolek & Lolek - Pharaoh's Tomb | MPEG 1 | Amusement
+Bolek & Lolek - Race to the North Pole | MPEG 1 | Amusement
 (5 rows)
 
 **Oneliner**
@@ -50,10 +50,10 @@ commit;
 title | compress | category
 |:--:|:--:|:--:|
 Bolek & Lolek - Australian steppes | MPEG 1 | Amusement
-Bolek & Lolek - Gold TOwn | MPEG 1 | Amusement
+Bolek & Lolek - Gold Town | MPEG 1 | Amusement
 Bolek & Lolek - On tiger's trails | MPEG 1 | Amusement
-Bolek & Lolek - Pharaoh's TOmb | MPEG 1 | Amusement
-Bolek & Lolek - Race TO the North Pole | MPEG 1 | Amusement
+Bolek & Lolek - Pharaoh's Tomb | MPEG 1 | Amusement
+Bolek & Lolek - Race to the North Pole | MPEG 1 | Amusement
 (5 rows)
 
 **Oneliner**
@@ -81,11 +81,11 @@ ORDER BY e.title LIMIT 5;
 
 **Uwagi:**
 1. Ćwiczenia wykonujemy w parach
-2. Jedna osoba pełni rolę administraTOra bazy danych, na jej bazie danych wykonujemy ćwiczenia.
-(AdministraTOrem bazy jest osoba, która ją założyła).
+2. Jedna osoba pełni rolę administratora bazy danych, na jej bazie danych wykonujemy ćwiczenia.
+(Administratorem bazy jest osoba, która ją założyła).
 3. Druga osoba jest zwykłym użytkownikiem, zalogowanym do bazy.
 
-AdministraTOr bazy loguje się ze swojego terminala do bazy komendą:
+Administrator bazy loguje się ze swojego terminala do bazy komendą:
 
 `psql nazwa_bazy`
 
@@ -103,9 +103,9 @@ Użytkownik loguje się ze swojego terminala komendą:
 | 5. | `revoke SELECT ON categories FROM public;` <br>Odwołanie prawa dostępu. | |
 | 6. |  | `INSERT inTO categories (cid, name, cserid) values (50, 'test', 1);` <br>Komenda się nie wykona, brak uprawnień. |
 | 7. | **Zadanie:** jednym poleceniem nadać prawo do wykonywania *INSERT* oraz *delete* na tabeli *categories* dla Użytkownika, nie dla wszystkich. | |
-| 8. | | PrzetesTOwać nadane uprawnienia |
+| 8. | | Przetestować nadane uprawnienia |
 | 9. | **Zadanie:** Nadać komplet uprawnień dla Użytkownika dla tabeli *categories* | |
-| 10. | | PrzetesTOwać ***SELECT***, ***INSERT***, ***update***, ***delete*** |
+| 10. | | Przetestować ***SELECT***, ***INSERT***, ***update***, ***delete*** |
 | 11. | **Zadanie:** Odwołać prawo do *update*, *delete* i *SELECT* dla tabeli *categories* dla Użytkownika |
 
 ---
@@ -141,14 +141,14 @@ END;
 
 ---
 
-#### **Zadanie 5.** Napisać funkcję, która liczy warTOść średnią z kolumny ***konta.konTO***.
+#### **Zadanie 5.** Napisać funkcję, która liczy warTOść średnią z kolumny ***konta.konto***.
 
 ```sql
 CREATE FUNCTION srednia () RETURNS float AS '
 declare
     	c float;
 begin
-    	SELECT avg(konTO) inTO c FROM konta;
+    	SELECT avg(konto) INTO c FROM konta;
     	return c;
 end;
 ' Language 'plpgsql';
@@ -165,16 +165,16 @@ end;
 ---
 
 
-#### **Zadanie 7.** Napisać trigger, który zapewni unikalność wpisów w kolumnie ***konTO*** w tabeli ***konta***.
+#### **Zadanie 7.** Napisać trigger, który zapewni unikalność wpisów w kolumnie ***konto*** w tabeli ***konta***.
 
 ```sql
 CREATE FUNCTION x_x() RETURNS trigger AS'
 declare                    
 r konta%rowtype;
 begin
-for r in SELECT id,konTO FROM konta loop
-if NEW.konTO = r.konTO then
-raise notice ''Podana warTOsc juz istnieje w tabeli.'';
+for r in SELECT id,konto FROM konta loop
+if NEW.konto = r.konto then
+raise notice ''Podana wartosc juz istnieje w tabeli.'';
 return null;
 end if;
 end loop;
