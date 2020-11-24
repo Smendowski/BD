@@ -159,6 +159,16 @@ end;
 #### **Zadanie 6.** Zmodyfikować trigger ***x_2t***, tak, aBY działał również po każdym ***INSERT***, ***update*** oraz ***delete***.
 
 ```sql
+create function x_2 () returns trigger as '
+declare
+c int4;
+begin
+select sum(konto) into c from konta;
+raise notice ''Suma kont wynosi %'', c;
+return NEW;
+end;
+' language 'plpgsql';
+create trigger x_2t after insert or update or delete on konta for each row execute procedure x_2();
 ```
 
 
@@ -181,6 +191,7 @@ end loop;
 return NEW;
 end;
 'Language 'plpgsql';
+create trigger x_7t before update on konta for each row execute procedure x_7();
 ```
 
 ---
