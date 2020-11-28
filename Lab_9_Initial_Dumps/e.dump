@@ -1,0 +1,80 @@
+DROP TABLE episodes_list cascade;
+
+CREATE TABLE episodes_list (
+    eid integer,
+    mid integer,
+    episode_start integer,
+    episode_end integer,
+    descrhtml character varying(256),
+    title character varying(256),
+    keywords character varying(1024),
+    is_movie integer,
+    eserid integer,
+    descrtype integer
+);
+
+COPY episodes_list (eid, mid, episode_start, episode_end, descrhtml, title, keywords, is_movie, eserid, descrtype) FROM stdin;
+121	91	0	286426	\N	Gustavus wants to marry		1	3	1
+122	92	0	273538	\N	Gustavus participates in traffic		1	3	1
+123	93	0	286866	\N	Gustavus is a muff		1	2	1
+124	94	0	290711	\N	Gustavus and the fly		1	2	1
+119	89	0	298985	\N	Gustavus is cheating		1	2	1
+100	70	0	71602	\N	Intranet (advertisement)		1	7	1
+97	69	0	43469	\N	OVS Sample 1		1	5	1
+86	63	0	31558	\N	Fore Systems (advertisement)		1	1	1
+109	79	0	30228	http://www.oracle.com	OVS MPEG1 1536k		1	4	0
+134	104	0	30159	\N	OVS MPEG1 2048k		1	1	1
+135	105	0	31028	\N	OVS MPEG1 2048k PAL		1	2	1
+107	77	0	157657	\N	Revolution to orbit		1	2	1
+139	109	0	32266	\N	OVS Introduction		1	4	1
+102	72	0	9932	\N	OVS Sample 2		1	2	1
+131	101	0	5385605	\N	Video coding		1	1	1
+128	98	0	5501871	\N	Image coding (part 1)		1	2	1
+130	100	0	6965989	\N	Image coding (part 4)		1	2	1
+110	80	0	5436129	\N	Image coding (part 2)		1	4	1
+136	106	0	49901	\N	Course in a box		1	1	1
+138	108	0	155532	\N	Infomercial		1	5	1
+167	112	848160	922340		Nevado del Ruiz (Colombia)	Nevado del Ruiz Colombia Armero volcano	0	3	1
+171	112	1660400	1769500	\N	Volcanoes under glacier Vatnajökull (Iceland)	volcano glacier Vatnajökull Iceland	0	3	1
+174	112	2418340	2456750	\N	Krakatau (Indonesia)	Krakatau Indonesia volcano	0	1	1
+157	120	0	675884	\N	Technology LSA-PLUS		1	3	1
+169	112	1002580	1351670		Soufriere Hills (Montserrat, West Indies)	Soufriere Hills West Indies volcano	0	4	1
+172	112	1854750	2100540	\N	Mount St. Helens (Washington, USA)	Mount St. Helens Washington USA volcano	0	3	1
+173	112	2105000	2277210		Mount Rainier (Washington, USA)	Mount Rainier Washington USA volcano	0	3	1
+175	112	2458060	2555790	\N	Galunggung, Tambora, Toba (Indonesia)	Galunggung Tambora Toba Java Indonesia volcano	0	2	1
+158	121	0	4554451	../html_descriptions/microcosmos	Microcosmos (low quality)		1	2	0
+159	122	0	4534809	../html_descriptions/microcosmos	Microcosmos (medium quality)		1	3	0
+156	119	0	1897170	../html_descriptions/cable_LL	Overhead telecommunications lines		1	1	0
+142	112	0	2741565	../html_descriptions/deadliest_volcanoes	The World's Deadliest Volcanoes		1	2	0
+165	112	104430	764760	../html_descriptions/deadliest_volcanoes/kilauea.html	Kilauea (Hawaii, USA)	Kilauea Hawaii USA Hawai'i volcano	0	4	0
+166	112	803170	840430	../html_descriptions/deadliest_volcanoes/pacaya.html	Pacaya (Guatemala)	Pacaya Guatemala volcano	0	2	0
+168	112	930100	1002200	../html_descriptions/deadliest_volcanoes/popo.html	Popocatepetl (Mexico)	Popocatepetl Mexico volcano capital city	0	2	0
+170	112	1366870	1646170	../html_descriptions/deadliest_volcanoes/heimaey.html	Eldfell (Heimaey, Iceland)	Heimaey Iceland volcano Eldfell	0	3	0
+141	111	0	6422197	../html_descriptions/saga_of_life	Saga of life (high quality)		1	4	0
+160	123	0	3289977	../html_descriptions/saga_of_life	Saga of life (low quality)		1	2	0
+161	124	0	6363495	../html_descriptions/saga_of_life	Saga of life (medium quality)		1	2	0
+140	110	0	3571616	../html_descriptions/safari	Southern Africa Safari		1	3	0
+115	85	0	549268	../html_descriptions/bolek_lolek	Bolek & Lolek - Gold town	Bolek Lolek america 	1	5	0
+117	87	0	553376	../html_descriptions/bolek_lolek	Bolek & Lolek - On tiger's trails	Bolek Lolek tiger India	1	3	0
+116	86	0	581681	../html_descriptions/bolek_lolek	Bolek & Lolek - Pharaoh's tomb	Bolek Lolek Pharaoh tomb	1	3	0
+113	83	0	553450	../html_descriptions/bolek_lolek	Bolek & Lolek - Race to the North Pole	Bolek Lolek pole winter	1	4	0
+114	84	0	568964	../html_descriptions/bolek_lolek	Bolek & Lolek - Smuggler	Bolek Lolek smuggler	1	3	0
+112	82	0	607362	../html_descriptions/bolek_lolek	Bolek & Lolek - Australian steppes	Bolek Lolek australia stepp	1	14	0
+144	103	64920	133780	../html_descriptions/microcosmos/landing.html	Landing	microcosmos landing	0	4	0
+145	103	224020	542710	../html_descriptions/microcosmos/f_morning.html	The first morning	microcosmos morning	0	2	0
+146	103	550840	622710	../html_descriptions/microcosmos/bee.html	The bee	microcosmos the bee	0	4	0
+147	103	657890	796890	../html_descriptions/microcosmos/ladybird.html	The ladybird	The ladybird microcosmos	0	3	0
+148	103	896910	1011400	../html_descriptions/microcosmos/snails.html	Snails' sexual act	Snails' sexual act microcosmos snail	0	2	0
+183	129	0	757567	\N	Matematyczny model transmisji pakietów w kanale (M/M/1)	mm1 m/m/1 transmisja kanal model papir	1	1	1
+184	130	0	596081	http://www.kt.agh.edu.pl/prez/sld001.html	Prezentacja Katedry Telekomunikacji AGH	katedra telekomunikacja agh bti jajszczyk papir pach dziech	1	3	1
+133	103	0	4379470	../html_descriptions/microcosmos	Microcosmos (high quality)	microcosmos Andrzej	1	8	0
+187	132	0	147567	http://www.agh.edu.pl/tad/index.html	Wystąpienie rektora AGH	Tadeusiewicz rektor AGH Katdetra Telekomunikacji telekomunikacja TPSA	1	3	0
+185	131	0	837623	../html_descriptions/zembiec	Nowy budynek KT		1	1	0
+182	128	0	846550	../html_descriptions/zembiec	Nowy budynek KT	zembiec	1	3	0
+150	113	0	6876310	\N	The Big Blue		1	5	1
+193	83	141290	152770		fragment		0	1	0
+197	130	91550	98520		prof. Jajszczyk		0	1	0
+198	140	0	292118	\N	Lucent 1	Lucent, telecommunication	1	2	1
+199	141	0	323461	\N	Lucent 2	Lucent, telecommunication	1	1	1
+\.
+

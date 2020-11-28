@@ -1,0 +1,253 @@
+# Ad. zadanie 1
+
+#TEST 1 Proba naruszenia spojnosci bazy - dwie kategorie o tej samej nazwie.
+insert into categories (cid, name, cserid) values (100, 'KT', 1);
+ERROR:  Cannot insert a duplicate key into unique index categories_name_key
+
+#TEST 2 Proba naruszenia spojnosci bazy - dwie kategorie o tym samym cid.
+insert into categories (cid, name, cserid) values (63, 'New', 1);
+ERROR:  Cannot insert a duplicate key into unique index categories_pkey
+
+
+# Ad. zadanie 2
+
+#TEST 3 Proba naruszenia spojnosci bazy - Dwie podkategorie o tej samej nazwie w jednej kategorii.	
+insert into subcategories (sid, name, cid, sserid) values (200, 'Telecommunications', 61, 1);
+ERROR:  Cannot insert a duplicate key into unique index subcategories_cid_key
+
+#TEST 4 Proba naruszenia spojnosci bazy - Proba wpisania podkategorii do nieistniejacej kategorii.	
+insert into subcategories (sid, name, cid, sserid) values (200, 'AAA', 69, 1);
+ERROR:  $1 referential integrity violation - key referenced from subcategories not found in categories
+
+# Pozostale ograniczenia zostana sprawdzone przy okazji testowania zadania 3.
+
+
+# Ad. zadanie 3
+
+#TEST 5 Wprowadzenie wartosci domyslnych w kolumnach category i subcategory.
+insert into movies_list (mid) values (5000);
+select mid, filename, cid, sid from movies_list where mid=5000;
+ mid  | filename | cid | sid 
+------+----------+-----+-----
+ 5000 |          |   1 |   1
+(1 row)
+
+
+
+#TEST 6 Usuniecie kategorii.
+# Wyswietlamy liste podkategorii nalezacych do kategorii 60
+select * from subcategories where cid=60 order by sid;
+ sid |     name      | cid | sserid 
+-----+---------------+-----+--------
+  51 | Movies        |  60 |     15
+  52 | Cartoons      |  60 |      5
+  71 | Advertisement |  60 |      1
+(3 rows)
+
+# Wyswietlamy liste filmow nalezacych do kategorii 60
+select mid, filename, cid, sid from movies_list where cid=60 order by mid;
+ mid |           filename           | cid | sid 
+-----+------------------------------+-----+-----
+  82 | /mds/video/bolek1.mpi        |  60 |  52
+  83 | /mds/video/bolek2.mpi        |  60 |  52
+  84 | /mds/video/bolek3.mpi        |  60 |  52
+  85 | /mds/video/bolek4.mpi        |  60 |  52
+  86 | /mds/video/bolek5.mpi        |  60 |  52
+  87 | /mds/video/bolek6.mpi        |  60 |  52
+  89 | /mds/video/gustaw.mpi        |  60 |  52
+  91 | /mds/video/gustaw2.mpi       |  60 |  52
+  92 | /mds/video/gustaw3.mpi       |  60 |  52
+  93 | /mds/video/gustaw4.mpi       |  60 |  52
+  94 | /mds/video/gustaw5.mpi       |  60 |  52
+ 108 | /mds/video/ovs_mwv_samp3.mpi |  60 |  71
+ 113 | /mds/video/deep_blue.mpi     |  60 |  51
+(13 rows)
+
+
+delete from categories where cid=60;
+
+# Podkategorie nalezace do kategorii 60 zostaly automatycznie skasowane z tabeli subcategories (funkcjonalnosc z zadania 2)
+select * from subcategories where cid=60;
+ sid | name | cid | sserid 
+-----+------+-----+--------
+(0 rows)
+
+
+# Filmom, ktore nalezaly do kategorii 60 ustawiono domyslne wartosci cid i sid (1, 1).
+select mid, filename, cid, sid from movies_list where cid=60 order by mid;
+ mid | filename | cid | sid 
+-----+----------+-----+-----
+(0 rows)
+
+
+select mid, filename, cid, sid from movies_list where cid=1 order by mid;
+ mid  |           filename           | cid | sid 
+------+------------------------------+-----+-----
+   82 | /mds/video/bolek1.mpi        |   1 |   1
+   83 | /mds/video/bolek2.mpi        |   1 |   1
+   84 | /mds/video/bolek3.mpi        |   1 |   1
+   85 | /mds/video/bolek4.mpi        |   1 |   1
+   86 | /mds/video/bolek5.mpi        |   1 |   1
+   87 | /mds/video/bolek6.mpi        |   1 |   1
+   89 | /mds/video/gustaw.mpi        |   1 |   1
+   91 | /mds/video/gustaw2.mpi       |   1 |   1
+   92 | /mds/video/gustaw3.mpi       |   1 |   1
+   93 | /mds/video/gustaw4.mpi       |   1 |   1
+   94 | /mds/video/gustaw5.mpi       |   1 |   1
+  108 | /mds/video/ovs_mwv_samp3.mpi |   1 |   1
+  113 | /mds/video/deep_blue.mpi     |   1 |   1
+ 5000 |                              |   1 |   1
+(14 rows)
+
+
+
+#TEST 7 Usuniecie podkategorii.
+select mid, filename, cid, sid from movies_list where sid=59 order by mid;
+ mid |        filename         | cid | sid 
+-----+-------------------------+-----+-----
+ 103 | /mds/video/mikro.mpi    |  61 |  59
+ 110 | /mds/video/safarii.mpi  |  61 |  59
+ 111 | /mds/video/saga.mpi     |  61 |  59
+ 121 | /mds/video/MICRO400.mpi |  61 |  59
+ 122 | /mds/video/MICRO600.mpi |  61 |  59
+ 123 | /mds/video/SAGA400.mpi  |  61 |  59
+ 124 | /mds/video/SAGA600.mpi  |  61 |  59
+(7 rows)
+
+
+delete from subcategories where sid=59;
+
+# Filmom, ktore nalezaly do podkategorii 59 ustawiono domyslne wartosci category i subcategory (1, 1).
+select mid, filename, cid, sid from movies_list where sid=59 order by mid;
+ mid | filename | cid | sid 
+-----+----------+-----+-----
+(0 rows)
+
+select mid, filename, cid, sid from movies_list where sid=1 order by mid;
+ mid  |           filename           | cid | sid 
+------+------------------------------+-----+-----
+   82 | /mds/video/bolek1.mpi        |   1 |   1
+   83 | /mds/video/bolek2.mpi        |   1 |   1
+   84 | /mds/video/bolek3.mpi        |   1 |   1
+   85 | /mds/video/bolek4.mpi        |   1 |   1
+   86 | /mds/video/bolek5.mpi        |   1 |   1
+   87 | /mds/video/bolek6.mpi        |   1 |   1
+   89 | /mds/video/gustaw.mpi        |   1 |   1
+   91 | /mds/video/gustaw2.mpi       |   1 |   1
+   92 | /mds/video/gustaw3.mpi       |   1 |   1
+   93 | /mds/video/gustaw4.mpi       |   1 |   1
+   94 | /mds/video/gustaw5.mpi       |   1 |   1
+  103 | /mds/video/mikro.mpi         |   1 |   1
+  108 | /mds/video/ovs_mwv_samp3.mpi |   1 |   1
+  110 | /mds/video/safarii.mpi       |   1 |   1
+  111 | /mds/video/saga.mpi          |   1 |   1
+  113 | /mds/video/deep_blue.mpi     |   1 |   1
+  121 | /mds/video/MICRO400.mpi      |   1 |   1
+  122 | /mds/video/MICRO600.mpi      |   1 |   1
+  123 | /mds/video/SAGA400.mpi       |   1 |   1
+  124 | /mds/video/SAGA600.mpi       |   1 |   1
+ 5000 |                              |   1 |   1
+(21 rows)
+
+
+
+
+#TEST 8 Zmiana sid podkategorii.
+select mid, filename, cid, sid from movies_list where sid=62 order by mid;
+ mid |            filename            | cid | sid 
+-----+--------------------------------+-----+-----
+  80 | /mds/video/2kaseta-1_5Mbps.mpi |  61 |  62
+  98 | /mds/video/kas1.mpi            |  61 |  62
+ 100 | /mds/video/kas4.mpi            |  61 |  62
+ 101 | /mds/video/kas5.mpi            |  61 |  62
+ 106 | /mds/video/ovs_mwv_samp1.mpi   |  61 |  62
+ 120 | /mds/video/krone.mpi           |  61 |  62
+(6 rows)
+
+update subcategories set sid=262 where sid=62;
+select mid, filename, cid, sid from movies_list where sid=62 order by mid;
+ mid | filename | cid | sid 
+-----+----------+-----+-----
+(0 rows)
+
+
+select mid, filename, cid, sid from movies_list where sid=262 order by mid;
+ mid |            filename            | cid | sid 
+-----+--------------------------------+-----+-----
+  80 | /mds/video/2kaseta-1_5Mbps.mpi |  61 | 262
+  98 | /mds/video/kas1.mpi            |  61 | 262
+ 100 | /mds/video/kas4.mpi            |  61 | 262
+ 101 | /mds/video/kas5.mpi            |  61 | 262
+ 106 | /mds/video/ovs_mwv_samp1.mpi   |  61 | 262
+ 120 | /mds/video/krone.mpi           |  61 | 262
+(6 rows)
+
+
+#TEST 9 Zmiana cid kategorii.
+select mid, filename, cid, sid from movies_list where cid=61 order by mid;
+ mid |            filename            | cid | sid 
+-----+--------------------------------+-----+-----
+  77 | /mds/video/ovs_ftbx_samp2.mpi  |  61 |  61
+  80 | /mds/video/2kaseta-1_5Mbps.mpi |  61 | 262
+  98 | /mds/video/kas1.mpi            |  61 | 262
+ 100 | /mds/video/kas4.mpi            |  61 | 262
+ 101 | /mds/video/kas5.mpi            |  61 | 262
+ 106 | /mds/video/ovs_mwv_samp1.mpi   |  61 | 262
+ 112 | /mds/video/volcanos.mpi        |  61 |  58
+ 119 | /mds/video/kable_napow.mpi     |  61 |  61
+ 120 | /mds/video/krone.mpi           |  61 | 262
+(9 rows)
+
+
+select * from subcategories order by sid;
+ sid |        name        | cid | sserid 
+-----+--------------------+-----+--------
+   1 | undefined          |   1 |      1
+  53 | Mathematics        |  61 |      5
+  54 | Telecommunications |  63 |      2
+  56 | Others             |  62 |      2
+  57 | BTI                |  64 |      1
+  58 | Geography          |  61 |      3
+  60 | Physics            |  61 |      1
+  61 | Technology         |  61 |      1
+  72 | budowa             |  64 |      1
+  74 | wyk³ady            |  64 |      1
+ 262 | Telecommunications |  61 |      1
+(11 rows)
+
+
+update categories set cid=261 where cid=61;
+select mid, filename, cid, sid from movies_list where cid=261 order by mid;
+ mid |            filename            | cid | sid 
+-----+--------------------------------+-----+-----
+  77 | /mds/video/ovs_ftbx_samp2.mpi  | 261 |  61
+  80 | /mds/video/2kaseta-1_5Mbps.mpi | 261 | 262
+  98 | /mds/video/kas1.mpi            | 261 | 262
+ 100 | /mds/video/kas4.mpi            | 261 | 262
+ 101 | /mds/video/kas5.mpi            | 261 | 262
+ 106 | /mds/video/ovs_mwv_samp1.mpi   | 261 | 262
+ 112 | /mds/video/volcanos.mpi        | 261 |  58
+ 119 | /mds/video/kable_napow.mpi     | 261 |  61
+ 120 | /mds/video/krone.mpi           | 261 | 262
+(9 rows)
+
+
+select * from subcategories order by sid;
+ sid |        name        | cid | sserid 
+-----+--------------------+-----+--------
+   1 | undefined          |   1 |      1
+  53 | Mathematics        | 261 |      5
+  54 | Telecommunications |  63 |      2
+  56 | Others             |  62 |      2
+  57 | BTI                |  64 |      1
+  58 | Geography          | 261 |      3
+  60 | Physics            | 261 |      1
+  61 | Technology         | 261 |      1
+  72 | budowa             |  64 |      1
+  74 | wyk³ady            |  64 |      1
+ 262 | Telecommunications | 261 |      1
+(11 rows)
+
+
+
+

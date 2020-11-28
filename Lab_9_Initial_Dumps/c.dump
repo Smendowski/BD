@@ -1,0 +1,14 @@
+DROP TABLE "categories" cascade;
+CREATE TABLE "categories" (
+	"cid" int4,
+	"name" character varying(30),
+	"cserid" int4
+);
+COPY "categories" FROM stdin;
+1	undefined	1
+60	Amusement	1
+61	Education	1
+62	Others	1
+63	Commercial	1
+64	KT	1
+\.

@@ -1,0 +1,24 @@
+DROP TABLE "subcategories";
+CREATE TABLE "subcategories" (
+	"sid" int4,
+	"name" character varying(30),
+	"cid" int4,
+	"sserid" int4
+);
+COPY "subcategories" FROM stdin;
+1	undefined	1	1
+57	BTI	64	1
+59	Biology	61	1
+60	Physics	61	1
+61	Technology	61	1
+62	Telecommunications	61	1
+56	Others	62	2
+71	Advertisement	60	1
+54	Telecommunications	63	2
+72	budowa	64	1
+74	wykłady	64	1
+53	Mathematics	61	5
+58	Geography	61	3
+52	Cartoons	60	5
+51	Movies	60	15
+\.

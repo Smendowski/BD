@@ -3,7 +3,19 @@
 Author: @https://github.com/Smendowski
 
 ---
+Rozpoczynamy od skopiowania odpowiednich plików do katalogu użytkownika:
+```shell
+cp /home/rstankie/db/s.dump /home/USERNAME/
+cp /home/rstankie/db/m.dump /home/USERNAME/
+cp /home/rstankie/db/c.dump /home/USERNAME/
+cp /home/rstankie/db/e.dump /home/USERNAME/
+cp /home/rstankie/db/testy.txt /home/msmendow/
+```
 
+Zadanie będzie polegało na modyfikacji plików **s.dump**, **m.dump** oraz **c.dump**. 
+
+Dla zweryfikowania zadań 1–3 należy wykonać testy znajdujące się w pliku **~rstankie/db/testy.txt**. Podano
+wyniki jakie należy uzyskać.
 
 #### **Zadanie 1.** Utworzyć tabelę categories tak, aby kolumna cid była kluczem głównym, zaś kolumna name miała unikalne i niepuste wartości.
 ```sql
