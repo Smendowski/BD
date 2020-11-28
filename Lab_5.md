@@ -4,7 +4,7 @@ Author: @https://github.com/Smendowski
 
 ---
 
-#### **Zadanie 1.** Wyświetlić nazwę kategorii i sumę czasów trwania filmów należących do poszczególnych kategorii. Użyj CROSS JOIN.
+#### **Zadanie 1.**  Wyświetlić nazwę kategorii i sumę czasów trwania filmów należących do poszczególnych kategorii. Użyj CROSS JOIN.
 <font size="2">Brzydka wersja zapytania</font>
 ```sql
 SELECT c.name, SUM(CASE WHEN c.cid = m.cid THEN m.lenmsec ELSE 0 END)
